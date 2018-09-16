@@ -4,7 +4,8 @@
 #include <sstream>
 #include <string>
 #include <vector>
-
+#include "basiclibs.h"
+#include "gate.h"
 using namespace std;
 
 #ifndef mesh_h
@@ -12,8 +13,6 @@ using namespace std;
 
 static string wide_size_names[6] = {"332", "333", "33E", "33H", "33L", "773"};
 
-enum Size { WIDE, SLIM };
-enum FlyType { D, I };
 class Flight {
 private:
 public:
@@ -32,10 +31,12 @@ public:
 };
 
 typedef std::vector<Flight *> FlightList;
+typedef std::vector<gate *> GateList;
 
 class Mesh {
 public:
-  FlightList flightList;
+  FlightList flightListAll;
+    GateList gateListAll;
   Mesh() {}
   ~Mesh() { clear(); }
   void addFlights(string flights_name);

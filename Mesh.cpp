@@ -44,23 +44,23 @@ void Mesh::addFlights(string flights_name) {
       flight->plane_size = flight->getTypeSize(fields[5]);
       flight->flight_arrive = fields[3];
       flight->flight_go = fields[8];
-      flightList.push_back(flight);
+      flightListAll.push_back(flight);
     } // if
 
   } // for
-  for (int i = 0; i < flightList.size(); i++) {
-    cout << "id:" << flightList[i]->id
-         << " flight arrive:" << flightList[i]->flight_arrive
-         << "type arrive:" << flightList[i]->type_arrive << endl;
+  for (int i = 0; i < flightListAll.size(); i++) {
+    cout << "id:" << flightListAll[i]->id
+         << " flight arrive:" << flightListAll[i]->flight_arrive
+         << "type arrive:" << flightListAll[i]->type_arrive << endl;
   }
   // cout << "pages:" << page << endl;
 }
 
 void Mesh::clear() {
   size_t i;
-  for (i = 0; i < flightList.size(); i++) {
-    if (flightList[i] != NULL)
-      delete flightList[i];
+  for (i = 0; i < flightListAll.size(); i++) {
+    if (flightListAll[i] != NULL)
+      delete flightListAll[i];
   }
 }
 
