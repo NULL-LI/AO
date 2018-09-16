@@ -45,6 +45,9 @@ public:
 		return SLIM;
 	}
 };
+
+class gates 
+
 class Mesh {
 public:
 	FlightList flightList;
