@@ -29,5 +29,3 @@
 
 cmake-build-debug/
 .idea/
-build/
-qt-build/
