@@ -8,7 +8,7 @@
 #include <string>
 #include <vector>
 #include <set>
-
+#include <string.h>
 using namespace std;
 enum Size { W, N };
 enum FlyType { D, I };

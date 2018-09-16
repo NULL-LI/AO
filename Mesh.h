@@ -1,10 +1,4 @@
-#include <cstdio>
-#include <fstream>
-#include <iostream>
-#include <sstream>
-#include <string>
-#include <string.h>
-#include <vector>
+
 #include "basiclibs.h"
 #include "gate.h"
 using namespace std;
@@ -32,7 +26,7 @@ public:
 };
 
 typedef std::vector<Flight *> FlightList;
-typedef std::vector<gate *> GateList;
+typedef std::vector<GATE *> GateList;
 
 class Mesh {
 public:
