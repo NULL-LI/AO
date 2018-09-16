@@ -57,7 +57,7 @@ public:
 		while (getline(fin, line)){//for (int i = 0; i < 700; i++) {
 			page++;
 			
-			//getline(fin, line);   //���ж�ȡ�����з���\n�����֣������ļ�β��־eof��ֹ��ȡ
+			//getline(fin, line);   //中文测试
 			//cout << "ԭʼ�ַ�����" << line << endl; //�������
 			istringstream sin(line); //�������ַ���line���뵽�ַ�����istringstream��
 			vector<string> fields; //����һ���ַ�������
