@@ -36,7 +36,7 @@ typedef std::vector<gate *> GateList;
 class Mesh {
 public:
   FlightList flightListAll;
-    GateList gateListAll;
+  GateList gateListAll;
   Mesh() {}
   ~Mesh() { clear(); }
   void addFlights(string flights_source_file_name);

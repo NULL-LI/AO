@@ -61,7 +61,14 @@ void Mesh::addGates(string gates_src_name) {
   ifstream fin(gates_src_name);
   string line;
   while (getline(fin, line)) {
-
+      istringstream sin(line);
+      vector<string> fields; //
+      string field;
+      while (getline(sin, field, ',')) //
+      {
+          fields.push_back(Trim(field)); //
+          // cout << Trim(field) << endl;
+      }
   }
 }
 
