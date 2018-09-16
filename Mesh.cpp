@@ -60,6 +60,7 @@ void Mesh::addFlights(string flights_name) {
 void Mesh::addGates(string gates_src_name) {
   ifstream fin(gates_src_name);
   string line;
+  int gates_cnt=0;
   while (getline(fin, line)) {
       istringstream sin(line);
       vector<string> fields; //
@@ -67,8 +68,38 @@ void Mesh::addGates(string gates_src_name) {
       while (getline(sin, field, ',')) //
       {
           fields.push_back(Trim(field)); //
-          // cout << Trim(field) << endl;
+//           cout << Trim(field) << endl;
       }
+      cout<<fields.size()<<endl;
+      int id=gates_cnt++;
+      Building gate_building=(fields[1] == "T" ? T : S);
+      int gate_num;
+      char tmp[2];
+      sscanf(fields[0].data(), "%s%d",tmp, &gate_num);
+      Direction gate_direction;
+//      string direction;
+       if(strcmp(fields[2].data(),"North")==0 )
+          {
+              gate_direction=North;
+          }else if(strcmp(fields[2].data(),"South")==0 )
+          {
+              gate_direction=South;
+          }else if(strcmp(fields[2].data(),"East")==0 )
+          {
+              gate_direction=East;
+          }else if(strcmp(fields[2].data(),"West")==0 )
+          {
+              gate_direction=West;
+          }else if(strcmp(fields[2].data(),"Center")==0 )
+          {
+              gate_direction=Center;
+          }
+      Size gate_size=(fields[5] == "W" ? W : N);
+
+      set<FlyType> gate_arrive_type;
+      
+      set<FlyType> gate_leave_type;
+
   }
 }
 
@@ -91,7 +122,7 @@ int Flight::timeDiff(int time1, int time2) { return time2 - time1; }
 Size Flight::getTypeSize(string type) {
   for (int i = 0; i < 6; i++) {
     if (type == wide_size_names[i]) //
-      return WIDE;
+      return W;
   }
-  return SLIM;
+  return N;
 }

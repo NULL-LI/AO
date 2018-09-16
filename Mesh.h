@@ -3,6 +3,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <string.h>
 #include <vector>
 #include "basiclibs.h"
 #include "gate.h"

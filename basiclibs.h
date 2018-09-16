@@ -10,7 +10,7 @@
 #include <set>
 
 using namespace std;
-enum Size { WIDE, SLIM };
+enum Size { W, N };
 enum FlyType { D, I };
 enum Building { T, S };
 enum Direction {North,South,East,West,Center};
