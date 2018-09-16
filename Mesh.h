@@ -39,7 +39,8 @@ public:
     GateList gateListAll;
   Mesh() {}
   ~Mesh() { clear(); }
-  void addFlights(string flights_name);
+  void addFlights(string flights_source_file_name);
+  void addGates(string gates_src_name) ;
   void clear();
   string Trim(string &str);
 };

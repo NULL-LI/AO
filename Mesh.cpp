@@ -37,9 +37,9 @@ void Mesh::addFlights(string flights_name) {
       sscanf(fields[7].data(), "%d:%d", &hour, &minute);
       flight->time_go = hour * 60 + minute; // stoi(fields[7].substr(0, 2)) * 60
                                             // + stoi(fields[7].substr(3, 2));
-      cout << fields[4] << endl;
+//      cout << fields[4] << endl;
       flight->type_arrive = (fields[4] == "D" ? D : I);
-      cout << fields[9] << endl;
+//      cout << fields[9] << endl;
       flight->type_go = (fields[9] == "D" ? D : I);
       flight->plane_size = flight->getTypeSize(fields[5]);
       flight->flight_arrive = fields[3];
@@ -54,6 +54,15 @@ void Mesh::addFlights(string flights_name) {
          << "type arrive:" << flightListAll[i]->type_arrive << endl;
   }
   // cout << "pages:" << page << endl;
+}
+
+
+void Mesh::addGates(string gates_src_name) {
+  ifstream fin(gates_src_name);
+  string line;
+  while (getline(fin, line)) {
+
+  }
 }
 
 void Mesh::clear() {

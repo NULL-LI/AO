@@ -8,10 +8,10 @@
 #include <string>
 #include <vector>
 
-//#include "Mesh.h"
 
 enum Size { WIDE, SLIM };
 enum FlyType { D, I };
 enum Building { T, S };
+enum Direction {North,South,East,West,Center};
 
 #endif
