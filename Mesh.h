@@ -6,10 +6,12 @@
 #include <vector>
 
 using namespace std;
-class Flight;
-class Mesh;
+
+#ifndef mesh_h
+#define mesh_h
+
 string wide_size_names[6] = {"332", "333", "33E", "33H", "33L", "773"};
-typedef std::vector<Flight *> FlightList;
+
 enum Size { WIDE, SLIM };
 enum FlyType { D, I };
 class Flight {
@@ -28,6 +30,9 @@ public:
   int timeDiff(int time1, int time2);
   Size getTypeSize(string type);
 };
+
+typedef std::vector<Flight *> FlightList;
+
 class Mesh {
 public:
   FlightList flightList;
@@ -37,3 +42,5 @@ public:
   void clear();
   string Trim(string &str);
 };
+
+#endif
