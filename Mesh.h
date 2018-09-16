@@ -27,8 +27,8 @@ public:
 	int id;
 	int time_arrive;
 	int time_go;
-	Size type_size;//¿íÕ­ÐÍ
-	FlyType type_arrive;//µ½´ïÀàÐÍ/³ö·¢ÀàÐÍ
+	Size type_size;//ï¿½ï¿½Õ­ï¿½ï¿½
+	FlyType type_arrive;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	FlyType type_go;
 	string flight_arrive;
 	string flight_go;
@@ -51,20 +51,20 @@ public:
 	Mesh(){}
 	~Mesh() { clear(); }
 	void addFlights(string flights_name) {
-		ifstream fin(flights_name); //´ò¿ªÎÄ¼þÁ÷²Ù×÷
+		ifstream fin(flights_name); //ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		string line;
 		int page=0;
 		while (getline(fin, line)){//for (int i = 0; i < 700; i++) {
 			page++;
 			
-			//getline(fin, line);   //ÕûÐÐ¶ÁÈ¡£¬»»ÐÐ·û¡°\n¡±Çø·Ö£¬Óöµ½ÎÄ¼þÎ²±êÖ¾eofÖÕÖ¹¶ÁÈ¡
-			//cout << "Ô­Ê¼×Ö·û´®£º" << line << endl; //ÕûÐÐÊä³ö
-			istringstream sin(line); //½«ÕûÐÐ×Ö·û´®line¶ÁÈëµ½×Ö·û´®Á÷istringstreamÖÐ
-			vector<string> fields; //ÉùÃ÷Ò»¸ö×Ö·û´®ÏòÁ¿
+			//getline(fin, line);   //ï¿½ï¿½ï¿½Ð¶ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½Ð·ï¿½ï¿½ï¿½\nï¿½ï¿½ï¿½ï¿½ï¿½Ö£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½Î²ï¿½ï¿½Ö¾eofï¿½ï¿½Ö¹ï¿½ï¿½È¡
+			//cout << "Ô­Ê¼ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½" << line << endl; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			istringstream sin(line); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½lineï¿½ï¿½ï¿½ëµ½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½istringstreamï¿½ï¿½
+			vector<string> fields; //ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			string field;
-			while (getline(sin, field, ',')) //½«×Ö·û´®Á÷sinÖÐµÄ×Ö·û¶ÁÈëµ½field×Ö·û´®ÖÐ£¬ÒÔ¶ººÅÎª·Ö¸ô·û
+			while (getline(sin, field, ',')) //ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½sinï¿½Ðµï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ëµ½fieldï¿½Ö·ï¿½ï¿½ï¿½ï¿½Ð£ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½Îªï¿½Ö¸ï¿½ï¿½ï¿½
 			{
-				fields.push_back(Trim(field)); //½«¸Õ¸Õ¶ÁÈ¡µÄ×Ö·û´®Ìí¼Óµ½ÏòÁ¿fieldsÖÐ
+				fields.push_back(Trim(field)); //ï¿½ï¿½ï¿½Õ¸Õ¶ï¿½È¡ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½fieldsï¿½ï¿½
 				//cout << Trim(field) << endl;
 			}
 			int date_arrive, date_go;
@@ -79,14 +79,14 @@ public:
 				flight->id = stoi(fields[0].substr(2,3));
 				int hour, minute;
 				//char * date_time = fields[2].data();
-				sscanf_s(fields[2].data(),"%d:%d",&hour,&minute);
+				sscanf(fields[2].data(),"%d:%d",&hour,&minute);
 				if (date_arrive != 20) {
 					flight->time_arrive = 24* 60 + hour * 60 + minute;
 				}
 				else {
 					flight->time_arrive = hour * 60 + minute;
 				}
-				sscanf_s(fields[7].data(), "%d:%d", &hour, &minute);
+				sscanf(fields[7].data(), "%d:%d", &hour, &minute);
 				flight->time_go= hour * 60 + minute; //stoi(fields[7].substr(0, 2)) * 60 + stoi(fields[7].substr(3, 2));
 				cout << fields[4] << endl;
 				flight->type_arrive = (fields[4] == "D" ? D : I);
@@ -113,7 +113,7 @@ public:
 	}
 	string Trim(string& str)
 	{
-		//str.find_first_not_of(" \t\r\n"),ÔÚ×Ö·û´®strÖÐ´ÓË÷Òý0¿ªÊ¼£¬·µ»ØÊ×´Î²»Æ¥Åä"\t\r\n"µÄÎ»ÖÃ
+		//str.find_first_not_of(" \t\r\n"),ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½strï¿½Ð´ï¿½ï¿½ï¿½ï¿½ï¿½0ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×´Î²ï¿½Æ¥ï¿½ï¿½"\t\r\n"ï¿½ï¿½Î»ï¿½ï¿½
 		str.erase(0, str.find_first_not_of(" \t\r\n"));
 		str.erase(str.find_last_not_of(" \t\r\n") + 1);
 		return str;
