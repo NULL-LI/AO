@@ -41,7 +41,7 @@ void Mesh::addFlights(string flights_name) {
       flight->type_arrive = (fields[4] == "D" ? D : I);
       cout << fields[9] << endl;
       flight->type_go = (fields[9] == "D" ? D : I);
-      flight->type_size = flight->getTypeSize(fields[5]);
+      flight->plane_size = flight->getTypeSize(fields[5]);
       flight->flight_arrive = fields[3];
       flight->flight_go = fields[8];
       flightList.push_back(flight);

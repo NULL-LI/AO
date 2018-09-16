@@ -4,10 +4,9 @@
 #define gate_h
 
 
-
 class gate{
     int id;
-
+    Size gate_size;
 };
 
 

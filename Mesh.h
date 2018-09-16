@@ -10,7 +10,7 @@ using namespace std;
 #ifndef mesh_h
 #define mesh_h
 
-string wide_size_names[6] = {"332", "333", "33E", "33H", "33L", "773"};
+static string wide_size_names[6] = {"332", "333", "33E", "33H", "33L", "773"};
 
 enum Size { WIDE, SLIM };
 enum FlyType { D, I };
@@ -20,7 +20,7 @@ public:
   int id;
   int time_arrive;
   int time_go;
-  Size type_size;      //
+  Size plane_size;      //
   FlyType type_arrive; //
   FlyType type_go;
   string flight_arrive;
