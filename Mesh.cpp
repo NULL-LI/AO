@@ -136,9 +136,24 @@ bool Mesh::addPassengerGroups(string ticket_src_name) {
     date_go = stoi(fields[5].substr(0, 2));
     // cout << "arrive" << date_arrive << " go" << date_go << endl;
     if (date_arrive == 20 || date_go == 20) {
-      cout<<"test\n"<<endl;
+//      cout<<"test\n"<<endl;
+      shared_ptr<PASSENGERGROUP> passengerGroup;
+      passengerGroup.reset(new PASSENGERGROUP());
+      passengerGroup->id = stoi(fields[0].substr(1, 3));
+      passengerGroup->peopleNum=stoi(fields[1]);
+      passengerGroup->flight_arrive_number=fields[2];
+      passengerGroup->flight_leave_number=fields[4];
+      passengerGroupListAll.push_back(passengerGroup);
     }
     }
+  if (passengerGroupListAll.empty() == true) {
+    cout << "Passenger list empty!" << endl;
+    return false;
+  } else {
+    printf("Read %ld passengers\n", passengerGroupListAll.size());
+    getGateInfo();
+    return true;
+  }
 
 }
 

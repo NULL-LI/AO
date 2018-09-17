@@ -8,6 +8,7 @@ int main()
 	printf("Start main\n");
 	mesh->addFlights("../data/pucks.csv");
     mesh->addGates("../data/gates.csv");
+	mesh->addPassengerGroups("../data/tickets.csv");
 
 	FlightList flight_nii,flight_ndd,flight_nid,flight_ndi;
 	FlightList flight_wii,flight_wdd,flight_wid,flight_wdi;
