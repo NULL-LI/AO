@@ -143,6 +143,9 @@ bool Mesh::addPassengerGroups(string ticket_src_name) {
       passengerGroup->peopleNum=stoi(fields[1]);
       passengerGroup->flight_arrive_number=fields[2];
       passengerGroup->flight_leave_number=fields[4];
+        passengerGroup->date_arrive=date_arrive;
+        passengerGroup->date_leave=date_go;
+
       passengerGroupListAll.push_back(passengerGroup);
     }
     }

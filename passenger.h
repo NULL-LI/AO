@@ -9,7 +9,7 @@ public:
   int peopleNum;
 
   int date_arrive;
-  int date_leave;  
+  int date_leave;
 
   string flight_arrive_number;
   string flight_leave_number;
