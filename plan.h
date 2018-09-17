@@ -17,9 +17,11 @@ public:
 
   double passengerTotalTime;
   double passengerTotalTension;
+int passengerTotalNumber;
 
   bool getpassengerTotalTime();
   bool getpassengerTotalTension();
+    bool getpassengerTotalNumber();
 
 //  bool getPassengerGate(PASSENGERGROUP &passengerGroup);
 

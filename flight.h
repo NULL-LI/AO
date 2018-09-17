@@ -24,7 +24,6 @@ public:
 };
 typedef std::vector<shared_ptr<FLIGHT>> FlightList;
 
-int gateShortestTime(GATE gate1,GATE gate2);
 
 class FLIGHT_GATE : public FLIGHT{
 public:
@@ -34,6 +33,9 @@ public:
     bool isValid();
 
 };
+
+int formalityTime(FLIGHT_GATE flightGate1,FLIGHT_GATE flightGate2);
+int metroTimes(FLIGHT_GATE flightGate1,FLIGHT_GATE flightGate2);
 
 typedef std::vector<shared_ptr<FLIGHT_GATE>> FlightGateList;
 

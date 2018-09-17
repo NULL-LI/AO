@@ -2,8 +2,24 @@
 PLAN::PLAN(vector<shared_ptr<TIMELINE_GATE>> timelines, PassengerGroupList pl)
     : schedule(timelines), passengerGroupListAll(pl) {}
 
-bool PLAN::getpassengerTotalTime() { return true; }
+bool PLAN::getpassengerTotalTime() {
+  passengerTotalTime=0;
+  for(int iter=0;iter<passengerGroupListAll.size();iter++){
+//int temp_time=
+
+  }
+
+  return true; }
 bool PLAN::getpassengerTotalTension() { return true; }
+
+bool PLAN::getpassengerTotalNumber(){
+  passengerTotalNumber=0;
+  for(int iter=0;iter<passengerGroupListAll.size();iter++){
+//if(passengerGroupListAll[iter]->flight_with_gate_arrive_ptr!=NULL&&)
+//
+  }
+  return true;
+}
 //bool PLAN::getPassengerGate(PASSENGERGROUP &passengerGroup){
 //
 //}
