@@ -12,7 +12,7 @@ typedef std::vector<vector< int>> Map;
 
 
 struct Node{
-    shared_ptr<Flight>flight;
+    shared_ptr<FLIGHT>flight;
     //vector<int> link_nodes;
     bool vis=false;
 };

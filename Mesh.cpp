@@ -24,8 +24,8 @@ bool Mesh::addFlights(string flights_name) {
     if (date_arrive == 20 || date_go == 20) {
       // cout << "arrive" << date_arrive << " go" << date_go << endl;
       // cout << "pages:" << page << endl;
-      shared_ptr<Flight> flight;
-      flight.reset(new Flight());
+      shared_ptr<FLIGHT> flight;
+      flight.reset(new FLIGHT());
       flight->id = stoi(fields[0].substr(2, 3));
       int hour, minute;
       // char * date_time = fields[2].data();
@@ -132,15 +132,8 @@ string Mesh::Trim(string &str) {
   return str;
 }
 
-int Flight::timeDiff(int time1, int time2) { return time2 - time1; }
 
-Size Flight::getTypeSize(string type) {
-  for (int i = 0; i < 6; i++) {
-    if (type == wide_size_names[i]) //
-      return W;
-  }
-  return N;
-}
+
 
 bool Mesh::getGateInfo() {
   if (gateListAll.empty() == true) {
