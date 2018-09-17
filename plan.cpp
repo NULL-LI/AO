@@ -13,7 +13,12 @@ bool PLAN::getpassengerTotalTime() {
   }
   return true;
 }
-bool PLAN::getpassengerTotalTension() { return true; }
+
+bool PLAN::getpassengerTotalTension()
+{
+
+    return true;
+}
 
 bool PLAN::getpassengerTotalNumber() {
   passengerInBuildingNumber = 0;
