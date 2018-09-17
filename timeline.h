@@ -29,6 +29,6 @@ public:
     bool isValid();
 
 };
-
+bool gateCompatible(const set<FlyType > DI_Flight,const set<FlyType > DI_Gate);
 
 #endif

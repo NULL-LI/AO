@@ -25,6 +25,8 @@ typedef std::vector<shared_ptr<GATE >> GateList;
 
 class GATEINFO{
 public:
+    GATEINFO();
+
     int gateNum_Total;
 
     int gateNum_Narrow_I_I;

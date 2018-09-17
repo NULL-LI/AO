@@ -22,7 +22,7 @@ public:
   bool switchGatesRandom();
   bool switchGatesBack();
 
-  bool isValid();
+  bool isValid(GATEINFO gateinfo);
 
   bool updateFlightGate();
 

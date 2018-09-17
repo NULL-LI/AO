@@ -199,10 +199,12 @@ bool Mesh::getGateInfo() {
   gateInfoAll.gateNum_Wide_DI_DI = 0;
 
   gateInfoAll.gateNum_Total = (int)gateListAll.size();
-  for (int i = 0; i < gateListAll.size(); i++) {
     set<FlyType> FlyType_DI = {D, I};
     set<FlyType> FlyType_I = {I};
     set<FlyType> FlyType_D = {D};
+
+  for (int i = 0; i < gateListAll.size(); i++) {
+
 
     if (gateListAll[i]->gate_size == N) {
       if (gateListAll[i]->gate_arrive_type == FlyType_I &&

@@ -56,3 +56,21 @@ void GATEINFO::printGateInfo() {
 
   printf("gateNum_Wide_DI_DI %d\n", gateNum_Wide_DI_DI);
 }
+
+GATEINFO::GATEINFO(){
+  gateNum_Narrow_I_I = 0;
+  gateNum_Narrow_D_D = 0;
+  gateNum_Narrow_I_DI = 0;
+  gateNum_Narrow_DI_I = 0;
+  gateNum_Narrow_D_DI = 0;
+  gateNum_Narrow_DI_D = 0;
+  gateNum_Narrow_DI_DI = 0;
+
+  gateNum_Wide_I_I = 0;
+  gateNum_Wide_D_D = 0;
+  gateNum_Wide_I_DI = 0;
+  gateNum_Wide_DI_I = 0;
+  gateNum_Wide_D_DI = 0;
+  gateNum_Wide_DI_D = 0;
+  gateNum_Wide_DI_DI = 0;
+}

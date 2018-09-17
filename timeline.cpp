@@ -79,3 +79,16 @@ bool TIMELINE_GATE::isValid() {
 
   return validFlag;
 }
+
+bool gateCompatible(const set<FlyType > DI_Flight,const set<FlyType > DI_Gate){
+  set<FlyType>::iterator iter;
+  for (auto iter_flight=DI_Flight.begin();iter_flight!=DI_Flight.end();iter_flight++)
+  {
+  iter = DI_Gate.find(*iter_flight);
+  if (iter == DI_Gate.end()) { //not found
+    return false;
+  }
+  }
+    return true;
+
+}

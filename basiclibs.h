@@ -21,4 +21,6 @@ enum Direction {North,South,East,West,Center};
 #define random(x)(rand()%x)
 
 
+
+
 #endif
