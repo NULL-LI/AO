@@ -147,6 +147,23 @@ bool Mesh::getGateInfo() {
     cout << "Gate list empty, no gate info!" << endl;
     return false;
   }
+
+  gateInfoAll.gateNum_Narrow_I_I = 0;
+  gateInfoAll.gateNum_Narrow_D_D = 0;
+  gateInfoAll.gateNum_Narrow_I_DI = 0;
+  gateInfoAll.gateNum_Narrow_DI_I = 0;
+  gateInfoAll.gateNum_Narrow_D_DI = 0;
+  gateInfoAll.gateNum_Narrow_DI_D = 0;
+  gateInfoAll.gateNum_Narrow_DI_DI = 0;
+
+  gateInfoAll.gateNum_Wide_I_I = 0;
+  gateInfoAll.gateNum_Wide_D_D = 0;
+  gateInfoAll.gateNum_Wide_I_DI = 0;
+  gateInfoAll.gateNum_Wide_DI_I = 0;
+  gateInfoAll.gateNum_Wide_D_DI = 0;
+  gateInfoAll.gateNum_Wide_DI_D = 0;
+  gateInfoAll.gateNum_Wide_DI_DI = 0;
+
   gateInfoAll.gateNum_Total = (int)gateListAll.size();
   for (int i = 0; i < gateListAll.size(); i++) {
     set<FlyType> FlyType_DI = {D, I};
