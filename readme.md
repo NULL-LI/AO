@@ -1,4 +1,4 @@
-class Flight:
+## class Flight:
 - int id;
 - int time_arrive;
 - int time_go;
@@ -8,12 +8,19 @@ class Flight:
 - string flight_arrive;
 - string flight_go;
 
-class Gates:
+## class Gates:
+
 - (enum) StationType station_type;
 - (enum) Direction direction;
 - Size type_size; //wide or slim
 - FlyType type_arrive;
 - FlyType type_go;
 
-class Nodes:
-- 
+## class Graph
+
+```c++
+Graph::Graph(FlightList flightGroup);//receive a FlightList when constructing
+Graph::solve();//do all the needed calculation and the results stored in attribute path_list;
+GraphPtr->path_list; //access the results
+```
+
