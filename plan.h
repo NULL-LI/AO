@@ -7,11 +7,13 @@
 class PLAN {
 public:
   vector<shared_ptr<TIMELINE_GATE>> schedule;
-    GateList gateListAll;
+  GateList gateListAll;
   FlightGateList FlightGateListOfPlan;
   PassengerGroupList passengerGroupListAll;
 
-  PLAN(vector<shared_ptr<TIMELINE_GATE>> timelines,PassengerGroupList pl);
+  int switchedScheduleIdx1,switchedScheduleIdx2;
+
+  PLAN(vector<shared_ptr<TIMELINE_GATE>> timelines, PassengerGroupList pl);
 
   double passengerTotalTime;
   double passengerTotalTension;
@@ -26,7 +28,7 @@ public:
 
   bool updateFlightGate();
 
-    bool fillInEmptyTimeline();
+  bool fillInEmptyTimeline();
 
   bool optimizeTotalTime(int iter);
   bool optimizeTotalTension(int iter);

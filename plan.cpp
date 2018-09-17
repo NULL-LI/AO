@@ -28,8 +28,35 @@ bool switchable(TIMELINE_GATE time_gate_1, TIMELINE_GATE time_gate_2) {
   return true;
 }
 
-bool PLAN::switchGatesRandom() { return true; }
-bool PLAN::switchGatesBack() { return true; }
+bool PLAN::switchGatesRandom() {
+  int scheduleNum = schedule.size();
+  int switchIdx1 = rand() % (scheduleNum + 1);
+  int switchIdx2 = rand() % (scheduleNum + 1);
+  do {
+    switchIdx1 = rand() % (scheduleNum + 1);
+    switchIdx2 = rand() % (scheduleNum + 1);
+  } while (!switchable(*schedule[switchIdx1], *schedule[switchIdx2]));
+
+  GATE temp_gate = schedule[switchIdx1]->gate;
+  schedule[switchIdx1]->gate = schedule[switchIdx2]->gate;
+  schedule[switchIdx2]->gate = temp_gate;
+
+  switchedScheduleIdx1 = switchIdx1;
+  switchedScheduleIdx2 = switchIdx2;
+
+  return true;
+}
+bool PLAN::switchGatesBack() {
+  if (switchable(*schedule[switchedScheduleIdx1],
+                 *schedule[switchedScheduleIdx2])) {
+    GATE temp_gate = schedule[switchedScheduleIdx1]->gate;
+    schedule[switchedScheduleIdx1]->gate = schedule[switchedScheduleIdx2]->gate;
+    schedule[switchedScheduleIdx2]->gate = temp_gate;
+    return true;
+  } else {
+    return false;
+  }
+}
 
 bool PLAN::isValid(GATEINFO gateinfo) {
   if (gateListAll.empty() == true) {
@@ -152,7 +179,10 @@ bool PLAN::fillInEmptyTimeline() { // fill the open gates with empty schedule
 
     schedule.push_back(timeline_gate_ptr_temp);
   }
-
+  if (schedule.size() != gateListAll.size()) {
+    perror("Fill in empty timeline error\n");
+    return false;
+  }
   return true;
 }
 
