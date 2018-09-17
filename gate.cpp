@@ -57,7 +57,84 @@ void GATEINFO::printGateInfo() {
   printf("gateNum_Wide_DI_DI %d\n", gateNum_Wide_DI_DI);
 }
 
-GATEINFO::GATEINFO(){
+int gateShortestTime(GATE gate1, GATE gate2) {
+  int timeTableGate[7][7] = {
+      {10, 15, 20, 25, 20, 25, 25}, {15, 10, 15, 20, 15, 20, 20},
+      {20, 15, 10, 25, 20, 25, 25}, {25, 20, 25, 10, 15, 20, 20},
+      {20, 15, 20, 15, 10, 15, 15}, {25, 20, 25, 20, 15, 10, 20},
+      {25, 20, 25, 20, 15, 20, 10},
+  };
+  int timeGateIdx1, timeGateIdx2;
+
+  if (gate1.gate_building == T) {
+    switch (gate1.gate_direction) {
+    case North:
+      timeGateIdx1 = 0;
+      break;
+    case Center:
+      timeGateIdx1 = 1;
+      break;
+    case South:
+      timeGateIdx1 = 2;
+      break;
+    default:
+      perror("get timeGateIdx error\n");
+    }
+  } else if (gate1.gate_building == S) {
+    switch (gate1.gate_direction) {
+    case North:
+      timeGateIdx1 = 3;
+      break;
+    case Center:
+      timeGateIdx1 = 4;
+      break;
+    case South:
+      timeGateIdx1 = 5;
+      break;
+    case East:
+      timeGateIdx1 = 6;
+      break;
+    default:
+      perror("get timeGateIdx error\n");
+    }
+  }
+  if (gate2.gate_building == T) {
+    switch (gate2.gate_direction) {
+    case North:
+      timeGateIdx2 = 0;
+      break;
+    case Center:
+      timeGateIdx2 = 1;
+      break;
+    case South:
+      timeGateIdx2 = 2;
+      break;
+    default:
+      perror("get timeGateIdx error\n");
+    }
+  } else if (gate2.gate_building == S) {
+    switch (gate2.gate_direction) {
+    case North:
+      timeGateIdx2 = 3;
+      break;
+    case Center:
+      timeGateIdx2 = 4;
+      break;
+    case South:
+      timeGateIdx2 = 5;
+      break;
+    case East:
+      timeGateIdx2 = 6;
+      break;
+    default:
+      perror("get timeGateIdx error\n");
+    }
+  }
+
+  return timeTableGate[timeGateIdx1][timeGateIdx2];
+}
+
+GATEINFO::GATEINFO() {
   gateNum_Narrow_I_I = 0;
   gateNum_Narrow_D_D = 0;
   gateNum_Narrow_I_DI = 0;
