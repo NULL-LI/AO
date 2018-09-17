@@ -16,6 +16,12 @@ bool PLAN::getpassengerTotalTime() {
 
 bool PLAN::getpassengerTotalTension()
 {
+    double passengerTotalChangeTime = 0;
+
+    for(int i=0;i<passengerGroupListAll.size();i++)
+    {
+        //passengerTotalChangeTime += gateWalkingTime(passengerGroupListAll[i]->);
+    }
 
     return true;
 }
