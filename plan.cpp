@@ -11,5 +11,5 @@ void PLAN::getpassengerTotalTension(){
 }
 
 void PLAN::switchGates(){
-    
+
 }

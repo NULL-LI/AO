@@ -8,6 +8,26 @@ using namespace std;
 
 static string wide_size_names[6] = {"332", "333", "33E", "33H", "33L", "773"};
 
+struct GATEINFO{
+    int gateNum_Total;
+
+    int gateNum_Narrow_I_I;
+    int gateNum_Narrow_D_D;
+    int gateNum_Narrow_I_DI;
+    int gateNum_Narrow_DI_I;
+    int gateNum_Narrow_D_DI;
+    int gateNum_Narrow_DI_D;
+    int gateNum_Narrow_DI_DI;
+
+    int gateNum_Wide_I_I;
+    int gateNum_Wide_D_D;
+    int gateNum_Wide_I_DI;
+    int gateNum_Wide_DI_I;
+    int gateNum_Wide_D_DI;
+    int gateNum_Wide_DI_D;
+    int gateNum_Wide_DI_DI;
+};
+
 class Flight {
 private:
 public:
@@ -32,10 +52,12 @@ class Mesh {
 public:
   FlightList flightListAll;
   GateList gateListAll;
+  GATEINFO gateInfoAll;
   Mesh() {}
   ~Mesh() { clear(); }
   void addFlights(string flights_source_file_name);
   void addGates(string gates_src_name) ;
+  bool getGateInfo();
   void clear();
   string Trim(string &str);
 };
