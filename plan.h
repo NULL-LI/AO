@@ -6,12 +6,12 @@
 
 class PLAN {
 public:
-  vector<shared_ptr<TIMELINE>> schedule;
+  vector<shared_ptr<TIMELINE_GATE>> schedule;
 
   FlightGateList FlightGateListOfPlan;
   PassengerGroupList passengerGroupListAll;
 
-  PLAN(vector<shared_ptr<TIMELINE>> timelines,PassengerGroupList pl);
+  PLAN(vector<shared_ptr<TIMELINE_GATE>> timelines,PassengerGroupList pl);
 
   double passengerTotalTime;
   double passengerTotalTension;

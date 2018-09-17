@@ -1,5 +1,5 @@
 #include "plan.h"
-PLAN::PLAN(vector<shared_ptr<TIMELINE>> timelines,PassengerGroupList pl):schedule(timelines),passengerGroupListAll(pl) {}
+PLAN::PLAN(vector<shared_ptr<TIMELINE_GATE>> timelines,PassengerGroupList pl):schedule(timelines),passengerGroupListAll(pl) {}
 
 bool PLAN::getpassengerTotalTime() { return true; }
 bool PLAN::getpassengerTotalTension() { return true; }
@@ -9,7 +9,11 @@ bool PLAN::switchGatesBack() { return true; }
 
 bool PLAN::isValid() { return true; }
 
-bool PLAN::updateFlightGate(){ return true;}
+bool PLAN::updateFlightGate(){
+
+
+
+    return true;}
 
 bool PLAN::optimizeTotalTime(int iter){
     return true;
