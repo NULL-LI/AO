@@ -21,7 +21,7 @@ public:
   bool getpassengerTotalTime();
   bool getpassengerTotalTension();
 
-  bool getPassengerGate(PASSENGERGROUP &passengerGroup);
+//  bool getPassengerGate(PASSENGERGROUP &passengerGroup);
 
   bool switchGatesRandom();
   bool switchGatesBack();

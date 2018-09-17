@@ -57,7 +57,7 @@ void GATEINFO::printGateInfo() {
   printf("gateNum_Wide_DI_DI %d\n", gateNum_Wide_DI_DI);
 }
 
-int gateShortestTime(GATE gate1, GATE gate2) {
+int gateWalkingTime(GATE gate1, GATE gate2) {
   int timeTableGate[7][7] = {
       {10, 15, 20, 25, 20, 25, 25}, {15, 10, 15, 20, 15, 20, 20},
       {20, 15, 10, 25, 20, 25, 25}, {25, 20, 25, 10, 15, 20, 20},

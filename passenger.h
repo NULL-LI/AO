@@ -7,6 +7,10 @@ class PASSENGERGROUP {
 public:
   int id;
   int peopleNum;
+
+  int date_arrive;
+  int date_leave;  
+
   string flight_arrive_number;
   string flight_leave_number;
   shared_ptr< FLIGHT_GATE> flight_with_gate_arrive_ptr;

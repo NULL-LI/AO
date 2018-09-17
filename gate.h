@@ -21,7 +21,7 @@ public:
   void getFlyType(const string gate_DI_type_string,set<FlyType>&gate_DI_type);
 };
 
-int gateShortestTime(GATE gate1,GATE gate2);
+int gateWalkingTime(GATE gate1,GATE gate2);
 
 typedef std::vector<shared_ptr<GATE >> GateList;
 struct GateTypeStruct{

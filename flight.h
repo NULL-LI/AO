@@ -24,6 +24,8 @@ public:
 };
 typedef std::vector<shared_ptr<FLIGHT>> FlightList;
 
+int gateShortestTime(GATE gate1,GATE gate2);
+
 class FLIGHT_GATE : public FLIGHT{
 public:
     GATE gate;
