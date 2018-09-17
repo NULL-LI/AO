@@ -1,17 +1,15 @@
-#include <iostream>
-#include <cstdio>
-#include <fstream>
-#include <sstream>
-#include <string>
-#include <vector>
+#include "basiclibs.h"
 
 #include "Mesh.h"
 
 #define CLR(x) memset(x,-1,sizeof(x))
+#ifndef graph_h
+#define graph_h
+
+struct Node;
 typedef std::vector<Node*> NodeList;
 typedef std::vector<vector< int>> Map;
-class Node;
-class Graph;
+
 
 struct Node{
     Flight *flight;
@@ -26,12 +24,16 @@ public:
    // NodeList binaryNodes;
     Map map;//connections, will change during the graph construction
     int * link;//proper pair
+    vector<FlightList> path_list;
 
-    Graph(NodeList nodes):nodeList(nodes){}
+    Graph(FlightList flightGroup);
     ~Graph();
-    void constructMap();
+    void constructDirecMap();
     void constructBinaryGraph();//
-    bool dfs(Node *);
+    bool dfs(int index);
     void findPair();
     void findPath();
+    void solve();
 };
+
+#endif

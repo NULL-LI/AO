@@ -1,11 +1,12 @@
-#include "Graph.cpp"
-Graph::~Graph();
-Graph::dfs(Node*);
-void Graph::constructMap();
-void Graph::constructBinaryGraph();
-void Graph::findPair();
-void Graph::findPath();
+#include "Graph.h"
 
+Graph::Graph(FlightList flightGroup){
+    for(int i=0;i<flightGroup.size();i++){
+        Node *node=new Node();
+        node->flight=flightGroup[i];
+        //node->vis=false;
+    }
+}
 Graph::~Graph(){
     size_t i;
     for (i = 0; i < nodeList.size(); i++) {
@@ -13,7 +14,7 @@ Graph::~Graph(){
             delete nodeList[i];
     }
 }
-void Graph::constructMap(){
+void Graph::constructDirecMap(){
     for(int i=0;i<nodeList.size();i++){
         vector<int> adjacent;
         for(int j=0;j<nodeList.size();j++){
@@ -55,7 +56,7 @@ void Graph::constructBinaryGraph(){
 }
 //dfs propagration
 bool Graph::dfs(int index){
-    for(int i=0;i<linkList[index].size();i++){
+    for(int i=0;i<map[index].size();i++){
         int index_child=map[index][i];
         Node * node=nodeList[index_child];
         if(!node->vis){
@@ -73,7 +74,7 @@ bool Graph::dfs(int index){
 void Graph::findPair(){
     //update link
     for(int i=0;i<nodeList.size();i++){
-        if(link[i] <0 && bfs(i))//self is not in the pair
+        if(link[i] <0 && dfs(i))//self is not in the pair
             path_num++;
     }
 }
@@ -101,15 +102,30 @@ void Graph::findPath(){
     }
 
     //path will be found in map2
-    int path_found=0
-    vector<FlightList> path_list;
+    int path_found=0;
     for(int i=0;i<initial_node_size;i++){
         //if not visited and only be connected to one link
+        //and flight is not NULL
         //then this is a start node
-        if(!(nodeList[i]->vis) && map2[i].size()==1){
+        if(!(nodeList[i]->vis)&& nodeList[i]->flight && map2[i].size()==1){
+            path_found++;
+            nodeList[i]->vis=true;
             FlightList one_path;
             one_path.push_back(nodeList[i]->flight);
-            
-        }
-    }
+            int sig=i;
+            while(map2[map2[sig][0]].size()==2){
+                sig=map2[map2[sig][0]][1];
+                one_path.push_back(nodeList[sig]->flight);
+            }
+            path_list.push_back(one_path);   
+        }//end if
+    }//end for
+
+}
+
+void Graph::solve(){
+    constructDirecMap();
+    constructBinaryGraph();
+    findPair();
+    findPath();
 }
