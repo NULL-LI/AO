@@ -9,6 +9,7 @@
 #include <vector>
 #include <set>
 #include <string.h>
+#include <algorithm>
 #include <boost/smart_ptr.hpp>
 #include <boost/make_shared.hpp>
 using namespace std;

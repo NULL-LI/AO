@@ -11,11 +11,13 @@ public:
   int delayFlightNum;
   set<FlyType> arrive_DI_type;
   set<FlyType> leave_DI_type;
+  Size sizeNW;
   bool validFlag= false;
   TIMELINE(const FlightList FlightsOfLine_init);
   bool isValid();
   bool getDelayNum();
   bool getDIType();
+    bool getSize();
 };
 
 
