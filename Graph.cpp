@@ -85,6 +85,8 @@ void Graph::findPair(){
         
         if(link[nodeList.size()-1-i] <0 && dfs(i))//self is not in the pair
             path_num++;
+        if(link[i] <0 && dfs(i))//self is not in the pair
+            path_num++;
     }
 }
 

@@ -18,6 +18,7 @@ enum Size { W, N };
 enum FlyType { D, I };
 enum Building { T, S };
 enum Direction {North,South,East,West,Center};
+#define random(x)(rand()%x)
 
 
 #endif
