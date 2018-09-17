@@ -22,8 +22,8 @@ bool Mesh::addFlights(string flights_name) {
     date_go = stoi(fields[6].substr(0, 2));
     // cout << "arrive" << date_arrive << " go" << date_go << endl;
     if (date_arrive == 20 || date_go == 20) {
-      //cout << "arrive" << date_arrive << " go" << date_go << endl;
-      //cout << "pages:" << page << endl;
+      // cout << "arrive" << date_arrive << " go" << date_go << endl;
+      // cout << "pages:" << page << endl;
       shared_ptr<Flight> flight;
       flight.reset(new Flight());
       flight->id = stoi(fields[0].substr(2, 3));
@@ -31,16 +31,16 @@ bool Mesh::addFlights(string flights_name) {
       // char * date_time = fields[2].data();
       sscanf(fields[2].data(), "%d:%d", &hour, &minute);
       if (date_arrive != 20) {
-        flight->time_arrive =  hour * 60 + minute;
+        flight->time_arrive = hour * 60 + minute;
       } else {
-        flight->time_arrive = 24 * 60 +hour * 60 + minute;
+        flight->time_arrive = 24 * 60 + hour * 60 + minute;
       }
       sscanf(fields[7].data(), "%d:%d", &hour, &minute);
-      if(date_go !=20){
-        flight->time_go = 48*60+hour * 60 + minute;
-      }else{
-		  flight->time_go = 24*60+hour * 60 + minute;
-	  }
+      if (date_go != 20) {
+        flight->time_go = 48 * 60 + hour * 60 + minute;
+      } else {
+        flight->time_go = 24 * 60 + hour * 60 + minute;
+      }
       flight->type_arrive = (fields[4] == "D" ? D : I);
       //      cout << fields[9] << endl;
       flight->type_go = (fields[9] == "D" ? D : I);
@@ -49,18 +49,17 @@ bool Mesh::addFlights(string flights_name) {
       flight->flight_go = fields[8];
       flightListAll.push_back(flight);
     }
-
   }
-//  for (int i = 0; i < flightListAll.size(); i++) {
-//    cout << "id:" << flightListAll[i]->id
-//         << " flight arrive:" << flightListAll[i]->flight_arrive
-//         << "type arrive:" << flightListAll[i]->type_arrive << endl;
-//  }
+  //  for (int i = 0; i < flightListAll.size(); i++) {
+  //    cout << "id:" << flightListAll[i]->id
+  //         << " flight arrive:" << flightListAll[i]->flight_arrive
+  //         << "type arrive:" << flightListAll[i]->type_arrive << endl;
+  //  }
   if (flightListAll.empty() == true) {
-    cout<<"Flight list empty!"<<endl;
+    cout << "Flight list empty!" << endl;
     return false;
   } else {
-    printf("Read %ld flights\n",flightListAll.size());
+    printf("Read %ld flights\n", flightListAll.size());
     return true;
   }
   // cout << "pages:" << page << endl;
@@ -108,10 +107,10 @@ bool Mesh::addGates(string gates_src_name) {
     gateListAll.push_back(gate_tmp);
   }
   if (gateListAll.empty() == true) {
-    cout<<"Gate list empty!"<<endl;
+    cout << "Gate list empty!" << endl;
     return false;
   } else {
-    printf("Read %ld gates\n",gateListAll.size());
+    printf("Read %ld gates\n", gateListAll.size());
     getGateInfo();
     return true;
   }
@@ -143,58 +142,99 @@ Size Flight::getTypeSize(string type) {
   return N;
 }
 
-bool Mesh::getGateInfo()
-{
+bool Mesh::getGateInfo() {
   if (gateListAll.empty() == true) {
-    cout<<"Gate list empty, no gate info!"<<endl;
+    cout << "Gate list empty, no gate info!" << endl;
     return false;
   }
-  gateInfoAll.gateNum_Total=(int)gateListAll.size();
-    for(int i=0;i<gateListAll.size();i++) {
-      set<FlyType> FlyType_DI = {D, I};
-      set<FlyType> FlyType_I = {I};
-      set<FlyType> FlyType_D = {D};
+  gateInfoAll.gateNum_Total = (int)gateListAll.size();
+  for (int i = 0; i < gateListAll.size(); i++) {
+    set<FlyType> FlyType_DI = {D, I};
+    set<FlyType> FlyType_I = {I};
+    set<FlyType> FlyType_D = {D};
 
-      if (gateListAll[i]->gate_size == N) {
-        if (gateListAll[i]->gate_arrive_type == FlyType_I&&gateListAll[i]->gate_leave_type == FlyType_I) {
-          gateInfoAll.gateNum_Narrow_I_I+=1;
-        } else if (gateListAll[i]->gate_arrive_type == FlyType_D&&gateListAll[i]->gate_leave_type == FlyType_D) {
-          gateInfoAll.gateNum_Narrow_D_D+=1;
-        }else if (gateListAll[i]->gate_arrive_type == FlyType_I&&gateListAll[i]->gate_leave_type == FlyType_DI) {
-          gateInfoAll.gateNum_Narrow_I_DI+=1;
-        }else if (gateListAll[i]->gate_arrive_type == FlyType_DI&&gateListAll[i]->gate_leave_type == FlyType_I) {
-          gateInfoAll.gateNum_Narrow_DI_I+=1;
-        }else if (gateListAll[i]->gate_arrive_type == FlyType_D&&gateListAll[i]->gate_leave_type == FlyType_DI) {
-          gateInfoAll.gateNum_Narrow_D_DI+=1;
-        }else if (gateListAll[i]->gate_arrive_type == FlyType_DI&&gateListAll[i]->gate_leave_type == FlyType_D) {
-          gateInfoAll.gateNum_Narrow_DI_D+=1;
-        }else if (gateListAll[i]->gate_arrive_type == FlyType_DI&&gateListAll[i]->gate_leave_type == FlyType_DI) {
-          gateInfoAll.gateNum_Narrow_DI_DI+=1;
-        }else{
-          perror("gate DI type error\n");
-        }
-      }else if (gateListAll[i]->gate_size == W) {
-        if (gateListAll[i]->gate_arrive_type == FlyType_I&&gateListAll[i]->gate_leave_type == FlyType_I) {
-          gateInfoAll.gateNum_Wide_I_I+=1;
-        } else if (gateListAll[i]->gate_arrive_type == FlyType_D&&gateListAll[i]->gate_leave_type == FlyType_D) {
-          gateInfoAll.gateNum_Wide_D_D+=1;
-        }else if (gateListAll[i]->gate_arrive_type == FlyType_I&&gateListAll[i]->gate_leave_type == FlyType_DI) {
-          gateInfoAll.gateNum_Wide_I_DI+=1;
-        }else if (gateListAll[i]->gate_arrive_type == FlyType_DI&&gateListAll[i]->gate_leave_type == FlyType_I) {
-          gateInfoAll.gateNum_Wide_DI_I+=1;
-        }else if (gateListAll[i]->gate_arrive_type == FlyType_D&&gateListAll[i]->gate_leave_type == FlyType_DI) {
-          gateInfoAll.gateNum_Wide_D_DI+=1;
-        }else if (gateListAll[i]->gate_arrive_type == FlyType_DI&&gateListAll[i]->gate_leave_type == FlyType_D) {
-          gateInfoAll.gateNum_Wide_DI_D+=1;
-        }else if (gateListAll[i]->gate_arrive_type == FlyType_DI&&gateListAll[i]->gate_leave_type == FlyType_DI) {
-          gateInfoAll.gateNum_Wide_DI_DI+=1;
-        }else{
-          perror("gate DI type error\n");
-        }
-      }else{
-        perror("gate WN type error\n");
+    if (gateListAll[i]->gate_size == N) {
+      if (gateListAll[i]->gate_arrive_type == FlyType_I &&
+          gateListAll[i]->gate_leave_type == FlyType_I) {
+        gateInfoAll.gateNum_Narrow_I_I += 1;
+      } else if (gateListAll[i]->gate_arrive_type == FlyType_D &&
+                 gateListAll[i]->gate_leave_type == FlyType_D) {
+        gateInfoAll.gateNum_Narrow_D_D += 1;
+      } else if (gateListAll[i]->gate_arrive_type == FlyType_I &&
+                 gateListAll[i]->gate_leave_type == FlyType_DI) {
+        gateInfoAll.gateNum_Narrow_I_DI += 1;
+      } else if (gateListAll[i]->gate_arrive_type == FlyType_DI &&
+                 gateListAll[i]->gate_leave_type == FlyType_I) {
+        gateInfoAll.gateNum_Narrow_DI_I += 1;
+      } else if (gateListAll[i]->gate_arrive_type == FlyType_D &&
+                 gateListAll[i]->gate_leave_type == FlyType_DI) {
+        gateInfoAll.gateNum_Narrow_D_DI += 1;
+      } else if (gateListAll[i]->gate_arrive_type == FlyType_DI &&
+                 gateListAll[i]->gate_leave_type == FlyType_D) {
+        gateInfoAll.gateNum_Narrow_DI_D += 1;
+      } else if (gateListAll[i]->gate_arrive_type == FlyType_DI &&
+                 gateListAll[i]->gate_leave_type == FlyType_DI) {
+        gateInfoAll.gateNum_Narrow_DI_DI += 1;
+      } else {
+        perror("gate DI type error\n");
       }
+    } else if (gateListAll[i]->gate_size == W) {
+      if (gateListAll[i]->gate_arrive_type == FlyType_I &&
+          gateListAll[i]->gate_leave_type == FlyType_I) {
+        gateInfoAll.gateNum_Wide_I_I += 1;
+      } else if (gateListAll[i]->gate_arrive_type == FlyType_D &&
+                 gateListAll[i]->gate_leave_type == FlyType_D) {
+        gateInfoAll.gateNum_Wide_D_D += 1;
+      } else if (gateListAll[i]->gate_arrive_type == FlyType_I &&
+                 gateListAll[i]->gate_leave_type == FlyType_DI) {
+        gateInfoAll.gateNum_Wide_I_DI += 1;
+      } else if (gateListAll[i]->gate_arrive_type == FlyType_DI &&
+                 gateListAll[i]->gate_leave_type == FlyType_I) {
+        gateInfoAll.gateNum_Wide_DI_I += 1;
+      } else if (gateListAll[i]->gate_arrive_type == FlyType_D &&
+                 gateListAll[i]->gate_leave_type == FlyType_DI) {
+        gateInfoAll.gateNum_Wide_D_DI += 1;
+      } else if (gateListAll[i]->gate_arrive_type == FlyType_DI &&
+                 gateListAll[i]->gate_leave_type == FlyType_D) {
+        gateInfoAll.gateNum_Wide_DI_D += 1;
+      } else if (gateListAll[i]->gate_arrive_type == FlyType_DI &&
+                 gateListAll[i]->gate_leave_type == FlyType_DI) {
+        gateInfoAll.gateNum_Wide_DI_DI += 1;
+      } else {
+        perror("gate DI type error\n");
+      }
+    } else {
+      perror("gate WN type error\n");
     }
-    return true;
+  }
+  gateInfoAll.printGateInfo();
+  return true;
+}
 
+void GATEINFO::printGateInfo() {
+  printf("gateNum_Narrow_I_I %d\n", gateNum_Narrow_I_I);
+
+  printf("gateNum_Narrow_D_D %d\n", gateNum_Narrow_D_D);
+  printf("gateNum_Narrow_I_DI %d\n", gateNum_Narrow_I_DI);
+  printf("gateNum_Narrow_DI_I %d\n", gateNum_Narrow_DI_I);
+
+  printf("gateNum_Narrow_D_DI %d\n", gateNum_Narrow_D_DI);
+
+  printf("gateNum_Narrow_DI_D %d\n", gateNum_Narrow_DI_D);
+
+  printf("gateNum_Narrow_DI_DI %d\n", gateNum_Narrow_DI_DI);
+
+  printf("gateNum_Wide_I_I %d\n", gateNum_Wide_I_I);
+
+  printf("gateNum_Wide_D_D %d\n", gateNum_Wide_D_D);
+
+  printf("gateNum_Wide_I_DI %d\n", gateNum_Wide_I_DI);
+
+  printf("gateNum_Wide_DI_I %d\n", gateNum_Wide_DI_I);
+
+  printf("gateNum_Wide_D_DI %d\n", gateNum_Wide_D_DI);
+
+  printf("gateNum_Wide_DI_D %d\n", gateNum_Wide_DI_D);
+
+  printf("gateNum_Wide_DI_DI %d\n", gateNum_Wide_DI_DI);
 }

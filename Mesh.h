@@ -8,7 +8,8 @@ using namespace std;
 
 static string wide_size_names[6] = {"332", "333", "33E", "33H", "33L", "773"};
 
-struct GATEINFO{
+class GATEINFO{
+public:
     int gateNum_Total;
 
     int gateNum_Narrow_I_I;
@@ -26,6 +27,8 @@ struct GATEINFO{
     int gateNum_Wide_D_DI;
     int gateNum_Wide_DI_D;
     int gateNum_Wide_DI_DI;
+
+    void printGateInfo();
 };
 
 class Flight {
