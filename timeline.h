@@ -18,4 +18,15 @@ public:
   bool getDIType();
 };
 
+
+class TIMELINE_GATE : public TIMELINE{
+public:
+    GATE gate;
+//    TIMELINE_GATE(const FlightList FlightsOfLine_init);
+    TIMELINE_GATE(const FlightList FlightsOfLine_init,const GATE gate_init);
+    bool isValid();
+
+};
+
+
 #endif
