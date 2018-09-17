@@ -31,9 +31,21 @@ bool PLAN::fillInEmptyTimeline() { // fill the open gates with empty schedule
     for (int ite_gate = 0; ite_gate < tempGateList.size(); ite_gate++) {
       if (schedule[ite_sche]->gate.id == tempGateList[ite_gate]->id) {
         tempGateList.erase(tempGateList.begin() + ite_gate);
+        ite_gate-=1;
       }
     }
   }
+    for (int ite_gate = 0; ite_gate < tempGateList.size(); ite_gate++){
+        shared_ptr<TIMELINE_GATE> timeline_gate_ptr_temp;
+        FlightList Flights_temp;
+        Flights_temp.clear();
+        TIMELINE timeline_temp(Flights_temp);
+        timeline_gate_ptr_temp.reset(new TIMELINE_GATE(Flights_temp,*tempGateList[ite_gate]));
+
+        schedule.push_back(timeline_gate_ptr_temp);
+    }
+
+
   return true;
 }
 
