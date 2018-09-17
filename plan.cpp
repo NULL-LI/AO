@@ -1,13 +1,13 @@
 #include "plan.h"
 PLAN::PLAN(vector<shared_ptr<TIMELINE_GATE>> timelines, PassengerGroupList pl)
-    : schedule(timelines), passengerGroupListAll(pl) {}
+    : schedule(timelines), passengerGroupListAll(pl), passengerTotalTension(0) {}
 
 bool PLAN::getpassengerTotalTime() {
   passengerTotalTime = 0;
   for (int iter = 0; iter < passengerGroupListAll.size(); iter++) {
     if (passengerGroupListAll[iter]->inBuilding()) {int temp_time =
-              formalityTime(*passengerGroupListAll[iter]->flight_with_gate_arrive_ptr,
-                            *passengerGroupListAll[iter]->flight_with_gate_leave_ptr);
+              formalityTime(passengerGroupListAll[iter]->flight_with_gate_arrive_ptr,
+                            passengerGroupListAll[iter]->flight_with_gate_leave_ptr);
       passengerTotalTime+=temp_time*(passengerGroupListAll[iter]->peopleNum);
     }
   }
@@ -16,13 +16,18 @@ bool PLAN::getpassengerTotalTime() {
 
 bool PLAN::getpassengerTotalTension()
 {
-    double passengerTotalChangeTime = 0;
-
     for(int i=0;i<passengerGroupListAll.size();i++)
     {
-        //passengerTotalChangeTime += gateWalkingTime(passengerGroupListAll[i]->);
-    }
+        double passengerTotalChangeTime = 0;
+        passengerTotalChangeTime += (double)gateWalkingTime(passengerGroupListAll[i]->flight_with_gate_arrive_ptr->gate,passengerGroupListAll[i]->flight_with_gate_leave_ptr->gate);
+        passengerTotalChangeTime += (double)formalityTime(passengerGroupListAll[i]->flight_with_gate_arrive_ptr,passengerGroupListAll[i]->flight_with_gate_leave_ptr);
+        passengerTotalChangeTime += (double)metroTimes(passengerGroupListAll[i]->flight_with_gate_arrive_ptr,passengerGroupListAll[i]->flight_with_gate_leave_ptr);
 
+        double flight_connect_time = 0;
+        flight_connect_time = (double)passengerGroupListAll[i]->flight_with_gate_leave_ptr->time_go - (double)passengerGroupListAll[i]->flight_with_gate_arrive_ptr->time_arrive;
+
+        passengerTotalTension += passengerTotalChangeTime/flight_connect_time;
+    }
     return true;
 }
 
