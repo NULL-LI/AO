@@ -4,23 +4,22 @@
 #ifndef plan_h
 #define plan_h
 
-class PLAN{
+class PLAN {
 public:
-    vector<shared_ptr<TIMELINE>>schedule;
+  vector<shared_ptr<TIMELINE>> schedule;
 
-    PLAN(vector<shared_ptr<TIMELINE>> timelines);
+  PLAN(vector<shared_ptr<TIMELINE>> timelines);
 
-    double passengerTotalTime;
-    double passengerTotalTension;
+  double passengerTotalTime;
+  double passengerTotalTension;
 
-    void getpassengerTotalTime();
-    void getpassengerTotalTension();
+  bool getpassengerTotalTime();
+  bool getpassengerTotalTension();
 
-    void switchGates();
+  bool switchGatesRandom();
+  bool switchGatesBack();
 
-
-
+  bool isValid();
 };
-
 
 #endif

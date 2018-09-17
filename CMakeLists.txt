@@ -5,7 +5,7 @@ set(CMAKE_CXX_FLAGS "-march=native -O3  -pthread")
 # Define project name
 project(airport)
 
-add_library(3rd_libs SHARED Mesh.cpp gate.cpp timeline.cpp Graph.cpp plan.cpp)
+add_library(3rd_libs SHARED Mesh.cpp gate.cpp timeline.cpp Graph.cpp plan.cpp passenger.cpp)
 # Declare the executable target built from your sources
 add_executable(airport main.cpp)
 target_link_libraries( airport

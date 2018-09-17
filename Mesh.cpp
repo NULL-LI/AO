@@ -45,8 +45,8 @@ bool Mesh::addFlights(string flights_name) {
       //      cout << fields[9] << endl;
       flight->type_go = (fields[9] == "D" ? D : I);
       flight->plane_size = flight->getTypeSize(fields[5]);
-      flight->flight_arrive = fields[3];
-      flight->flight_go = fields[8];
+      flight->flight_arrive_number = fields[3];
+      flight->flight_leave_number = fields[8];
       flightListAll.push_back(flight);
     }
   }
@@ -228,30 +228,3 @@ bool Mesh::getGateInfo() {
   return true;
 }
 
-void GATEINFO::printGateInfo() {
-  printf("gateNum_Narrow_I_I %d\n", gateNum_Narrow_I_I);
-
-  printf("gateNum_Narrow_D_D %d\n", gateNum_Narrow_D_D);
-  printf("gateNum_Narrow_I_DI %d\n", gateNum_Narrow_I_DI);
-  printf("gateNum_Narrow_DI_I %d\n", gateNum_Narrow_DI_I);
-
-  printf("gateNum_Narrow_D_DI %d\n", gateNum_Narrow_D_DI);
-
-  printf("gateNum_Narrow_DI_D %d\n", gateNum_Narrow_DI_D);
-
-  printf("gateNum_Narrow_DI_DI %d\n", gateNum_Narrow_DI_DI);
-
-  printf("gateNum_Wide_I_I %d\n", gateNum_Wide_I_I);
-
-  printf("gateNum_Wide_D_D %d\n", gateNum_Wide_D_D);
-
-  printf("gateNum_Wide_I_DI %d\n", gateNum_Wide_I_DI);
-
-  printf("gateNum_Wide_DI_I %d\n", gateNum_Wide_DI_I);
-
-  printf("gateNum_Wide_D_DI %d\n", gateNum_Wide_D_DI);
-
-  printf("gateNum_Wide_DI_D %d\n", gateNum_Wide_DI_D);
-
-  printf("gateNum_Wide_DI_DI %d\n", gateNum_Wide_DI_DI);
-}

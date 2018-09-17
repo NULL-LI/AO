@@ -1,15 +1,10 @@
 #include "plan.h"
-PLAN::PLAN(vector<shared_ptr<TIMELINE>> timelines){
+PLAN::PLAN(vector<shared_ptr<TIMELINE>> timelines) {}
 
-}
+bool PLAN::getpassengerTotalTime() { return true; }
+bool PLAN::getpassengerTotalTension() { return true; }
 
-void PLAN::getpassengerTotalTime(){
+bool PLAN::switchGatesRandom() { return true; }
+bool PLAN::switchGatesBack() { return true; }
 
-}
-void PLAN::getpassengerTotalTension(){
-
-}
-
-void PLAN::switchGates(){
-
-}
+bool PLAN::isValid() { return true; }

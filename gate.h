@@ -21,4 +21,27 @@ public:
   void getFlyType(const string gate_DI_type_string,set<FlyType>&gate_DI_type);
 };
 
+
+class GATEINFO{
+public:
+    int gateNum_Total;
+
+    int gateNum_Narrow_I_I;
+    int gateNum_Narrow_D_D;
+    int gateNum_Narrow_I_DI;
+    int gateNum_Narrow_DI_I;
+    int gateNum_Narrow_D_DI;
+    int gateNum_Narrow_DI_D;
+    int gateNum_Narrow_DI_DI;
+
+    int gateNum_Wide_I_I;
+    int gateNum_Wide_D_D;
+    int gateNum_Wide_I_DI;
+    int gateNum_Wide_DI_I;
+    int gateNum_Wide_D_DI;
+    int gateNum_Wide_DI_D;
+    int gateNum_Wide_DI_DI;
+
+    void printGateInfo();
+};
 #endif

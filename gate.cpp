@@ -29,3 +29,30 @@ void GATE::getFlyType(const string gate_DI_type_string,
   //    }
   //    cout<<endl;
 }
+void GATEINFO::printGateInfo() {
+  printf("gateNum_Narrow_I_I %d\n", gateNum_Narrow_I_I);
+
+  printf("gateNum_Narrow_D_D %d\n", gateNum_Narrow_D_D);
+  printf("gateNum_Narrow_I_DI %d\n", gateNum_Narrow_I_DI);
+  printf("gateNum_Narrow_DI_I %d\n", gateNum_Narrow_DI_I);
+
+  printf("gateNum_Narrow_D_DI %d\n", gateNum_Narrow_D_DI);
+
+  printf("gateNum_Narrow_DI_D %d\n", gateNum_Narrow_DI_D);
+
+  printf("gateNum_Narrow_DI_DI %d\n", gateNum_Narrow_DI_DI);
+
+  printf("gateNum_Wide_I_I %d\n", gateNum_Wide_I_I);
+
+  printf("gateNum_Wide_D_D %d\n", gateNum_Wide_D_D);
+
+  printf("gateNum_Wide_I_DI %d\n", gateNum_Wide_I_DI);
+
+  printf("gateNum_Wide_DI_I %d\n", gateNum_Wide_DI_I);
+
+  printf("gateNum_Wide_D_DI %d\n", gateNum_Wide_D_DI);
+
+  printf("gateNum_Wide_DI_D %d\n", gateNum_Wide_DI_D);
+
+  printf("gateNum_Wide_DI_DI %d\n", gateNum_Wide_DI_DI);
+}

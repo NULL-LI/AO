@@ -8,28 +8,6 @@ using namespace std;
 
 static string wide_size_names[6] = {"332", "333", "33E", "33H", "33L", "773"};
 
-class GATEINFO{
-public:
-    int gateNum_Total;
-
-    int gateNum_Narrow_I_I;
-    int gateNum_Narrow_D_D;
-    int gateNum_Narrow_I_DI;
-    int gateNum_Narrow_DI_I;
-    int gateNum_Narrow_D_DI;
-    int gateNum_Narrow_DI_D;
-    int gateNum_Narrow_DI_DI;
-
-    int gateNum_Wide_I_I;
-    int gateNum_Wide_D_D;
-    int gateNum_Wide_I_DI;
-    int gateNum_Wide_DI_I;
-    int gateNum_Wide_D_DI;
-    int gateNum_Wide_DI_D;
-    int gateNum_Wide_DI_DI;
-
-    void printGateInfo();
-};
 
 class Flight {
 private:
@@ -40,8 +18,8 @@ public:
   Size plane_size;      //
   FlyType type_arrive; //
   FlyType type_go;
-  string flight_arrive;
-  string flight_go;
+  string flight_arrive_number;
+  string flight_leave_number;
 
   Flight() {}
   int timeDiff(int time1, int time2);
