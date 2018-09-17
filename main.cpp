@@ -11,6 +11,17 @@ int main() {
   mesh->addPassengerGroups("../data/tickets.csv");
 
   shared_ptr<Solution1 > solution1(new Solution1(mesh));
+  solution1->solve();
+  int flight_num=0;
+  for(int i=0;i<solution1->flight_group_list.size();i++){
+	  cout<<"size:"<<solution1->flight_group_list[i]->flight_paths.size()<<" type:"<<solution1->flight_group_list[i]->gate_type<<endl;
+	  for(int j=0;j<solution1->flight_group_list[i]->flight_paths.size();j++){
+		  flight_num +=solution1->flight_group_list[i]->flight_paths[j].size();
+	  }
+	  //cout<<"flight num:"<<flight_num<<endl;
+	  //flight_num=0;
+  }
+  cout<<"flight num:"<<flight_num<<endl;
 
 
   

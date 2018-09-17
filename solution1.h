@@ -21,6 +21,8 @@ public:
     Solution1(shared_ptr<Mesh> mesh_ptr):mesh(mesh_ptr){
         shared_ptr<struct FlightGroupStruct > flight_group(new struct FlightGroupStruct);
         flight_group->gate_type=NoneType;
+        FlightList path;
+        flight_group->flight_paths.push_back(path);
         flight_group_list.push_back(flight_group);
 
     }
@@ -28,7 +30,14 @@ public:
     void getWideCombine();
     void getNarrowCombine();
     bool flightInGroup(shared_ptr<FLIGHT> flight,vector<FlightList> path_list);
-    
+    int maxPath(vector<FlightList> flight_path);
+    void storeFrontPath(vector<FlightList> flight_path,int num);
+    int getPathListSize(vector<FlightList> flight_path);
+    void solve(){
+        getInitialPath();
+        getWideCombine();
+        getNarrowCombine();
+    }
 
 
 };
