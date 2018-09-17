@@ -3,24 +3,28 @@ PLAN::PLAN(vector<shared_ptr<TIMELINE_GATE>> timelines, PassengerGroupList pl)
     : schedule(timelines), passengerGroupListAll(pl) {}
 
 bool PLAN::getpassengerTotalTime() {
-  passengerTotalTime=0;
-  for(int iter=0;iter<passengerGroupListAll.size();iter++){
-//int temp_time=
-
-  }
-
-  return true; }
-bool PLAN::getpassengerTotalTension() { return true; }
-
-bool PLAN::getpassengerTotalNumber(){
-  passengerTotalNumber=0;
-  for(int iter=0;iter<passengerGroupListAll.size();iter++){
-//if(passengerGroupListAll[iter]->flight_with_gate_arrive_ptr!=NULL&&)
-//
+  passengerTotalTime = 0;
+  for (int iter = 0; iter < passengerGroupListAll.size(); iter++) {
+    if (passengerGroupListAll[iter]->inBuilding()) {int temp_time =
+              formalityTime(*passengerGroupListAll[iter]->flight_with_gate_arrive_ptr,
+                            *passengerGroupListAll[iter]->flight_with_gate_leave_ptr);
+      passengerTotalTime+=temp_time*(passengerGroupListAll[iter]->peopleNum);
+    }
   }
   return true;
 }
-//bool PLAN::getPassengerGate(PASSENGERGROUP &passengerGroup){
+bool PLAN::getpassengerTotalTension() { return true; }
+
+bool PLAN::getpassengerTotalNumber() {
+  passengerInBuildingNumber = 0;
+  for (int iter = 0; iter < passengerGroupListAll.size(); iter++) {
+    if (passengerGroupListAll[iter]->inBuilding()) {
+      passengerInBuildingNumber += passengerGroupListAll[iter]->peopleNum;
+    }
+  }
+  return true;
+}
+// bool PLAN::getPassengerGate(PASSENGERGROUP &passengerGroup){
 //
 //}
 bool switchable(TIMELINE_GATE time_gate_1, TIMELINE_GATE time_gate_2) {
