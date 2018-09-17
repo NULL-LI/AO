@@ -26,10 +26,11 @@ class FLIGHT_GATE : public FLIGHT{
 public:
     GATE gate;
 //    TIMELINE_GATE(const FlightList FlightsOfLine_init);
-    FLIGHT_GATE(const GATE gate_init);
+    FLIGHT_GATE(const FLIGHT flight_init,const GATE gate_init);
     bool isValid();
 
 };
 
+typedef std::vector<shared_ptr<FLIGHT_GATE>> FlightGateList;
 
 #endif

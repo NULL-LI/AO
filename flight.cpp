@@ -11,4 +11,8 @@ Size FLIGHT::getTypeSize(string type) {
 int FLIGHT::timeDiff(int time1, int time2) { return time2 - time1; }
 
 
-FLIGHT_GATE::FLIGHT_GATE(const GATE gate_init):gate(gate_init){}
+FLIGHT_GATE::FLIGHT_GATE(const FLIGHT flight_init,const GATE gate_init):FLIGHT(flight_init),gate(gate_init){}
+
+bool FLIGHT_GATE::isValid(){
+    return true;
+}

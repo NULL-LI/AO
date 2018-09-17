@@ -8,7 +8,10 @@ class PLAN {
 public:
   vector<shared_ptr<TIMELINE>> schedule;
 
+  FlightGateList FlightGateListOfPlan;
+
   PLAN(vector<shared_ptr<TIMELINE>> timelines);
+
 
   double passengerTotalTime;
   double passengerTotalTension;
@@ -20,6 +23,9 @@ public:
   bool switchGatesBack();
 
   bool isValid();
+
+  bool updateFlightGate();
+
 };
 
 #endif

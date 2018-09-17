@@ -8,3 +8,5 @@ bool PLAN::switchGatesRandom() { return true; }
 bool PLAN::switchGatesBack() { return true; }
 
 bool PLAN::isValid() { return true; }
+
+bool PLAN::updateFlightGate(){ return true;}

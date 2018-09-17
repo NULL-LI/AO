@@ -116,6 +116,32 @@ bool Mesh::addGates(string gates_src_name) {
   }
 }
 
+
+bool Mesh::addPassengerGroups(string ticket_src_name) {
+  ifstream fin(ticket_src_name);
+  string line;
+  int passenger_cnt = 0;
+  while (getline(fin, line)) {
+    istringstream sin(line);
+
+    vector<string> fields; //
+    string field;
+    while (getline(sin, field, ',')) //
+    {
+      fields.push_back(Trim(field));
+    }
+    int date_arrive, date_go;
+    // cout << fields[1] << endl;
+    date_arrive = stoi(fields[3].substr(0, 2));
+    date_go = stoi(fields[5].substr(0, 2));
+    // cout << "arrive" << date_arrive << " go" << date_go << endl;
+    if (date_arrive == 20 || date_go == 20) {
+      cout<<"test\n"<<endl;
+    }
+    }
+
+}
+
 void Mesh::clear() {
   size_t i;
   for (i = 0; i < flightListAll.size(); i++) {
