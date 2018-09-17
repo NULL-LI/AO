@@ -12,7 +12,6 @@ public:
 
   PLAN(vector<shared_ptr<TIMELINE>> timelines);
 
-
   double passengerTotalTime;
   double passengerTotalTension;
 
@@ -26,6 +25,8 @@ public:
 
   bool updateFlightGate();
 
+  bool optimizeTotalTime(int iter);
+  bool optimizeTotalTension(int iter);
 };
 
 #endif

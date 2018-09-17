@@ -10,3 +10,10 @@ bool PLAN::switchGatesBack() { return true; }
 bool PLAN::isValid() { return true; }
 
 bool PLAN::updateFlightGate(){ return true;}
+
+bool PLAN::optimizeTotalTime(int iter){
+    return true;
+}
+bool PLAN::optimizeTotalTension(int iter){
+    return true;
+}
