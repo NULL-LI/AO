@@ -9,8 +9,9 @@ public:
   vector<shared_ptr<TIMELINE>> schedule;
 
   FlightGateList FlightGateListOfPlan;
+  PassengerGroupList passengerGroupListAll;
 
-  PLAN(vector<shared_ptr<TIMELINE>> timelines);
+  PLAN(vector<shared_ptr<TIMELINE>> timelines,PassengerGroupList pl);
 
   double passengerTotalTime;
   double passengerTotalTension;

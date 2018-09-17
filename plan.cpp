@@ -1,5 +1,5 @@
 #include "plan.h"
-PLAN::PLAN(vector<shared_ptr<TIMELINE>> timelines) {}
+PLAN::PLAN(vector<shared_ptr<TIMELINE>> timelines,PassengerGroupList pl):schedule(timelines),passengerGroupListAll(pl) {}
 
 bool PLAN::getpassengerTotalTime() { return true; }
 bool PLAN::getpassengerTotalTension() { return true; }
