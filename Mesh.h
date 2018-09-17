@@ -13,8 +13,7 @@ using namespace std;
 //
 //};
 
-typedef std::vector<shared_ptr<FLIGHT>> FlightList;
-typedef std::vector<shared_ptr<GATE >> GateList;
+
 
 class Mesh {
 public:

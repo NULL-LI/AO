@@ -21,6 +21,7 @@ public:
   void getFlyType(const string gate_DI_type_string,set<FlyType>&gate_DI_type);
 };
 
+typedef std::vector<shared_ptr<GATE >> GateList;
 
 class GATEINFO{
 public:

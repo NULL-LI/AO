@@ -1,5 +1,5 @@
 #include "basiclibs.h"
-
+#include "gate.h"
 #ifndef flight_h
 #define flight_h
 
@@ -20,5 +20,16 @@ public:
   int timeDiff(int time1, int time2);
   Size getTypeSize(string type);
 };
+typedef std::vector<shared_ptr<FLIGHT>> FlightList;
+
+class FLIGHT_GATE : public FLIGHT{
+public:
+    GATE gate;
+//    TIMELINE_GATE(const FlightList FlightsOfLine_init);
+    FLIGHT_GATE(const GATE gate_init);
+    bool isValid();
+
+};
+
 
 #endif
