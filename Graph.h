@@ -7,7 +7,7 @@
 #define graph_h
 
 struct Node;
-typedef std::vector<Node*> NodeList;
+typedef std::vector<shared_ptr<Node>> NodeList;
 typedef std::vector<vector< int>> Map;
 
 

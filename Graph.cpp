@@ -10,8 +10,8 @@ Graph::Graph(FlightList flightGroup){
 Graph::~Graph(){
     size_t i;
     for (i = 0; i < nodeList.size(); i++) {
-        if (nodeList[i] != NULL)
-            delete nodeList[i];
+        if (nodeList[i] != NULL){}
+//            delete nodeList[i];
     }
 }
 void Graph::constructDirecMap(){
@@ -41,7 +41,8 @@ void Graph::constructBinaryGraph(){
     }
     //update nodeList
     for(int i=0;i<initial_size;i++){
-        Node *node=new Node();
+        shared_ptr<Node> node;
+        node.reset(new  Node());
         nodeList.push_back(node);
         //update map
         for(int j=0;j<map[i].size();j++){
@@ -58,7 +59,7 @@ void Graph::constructBinaryGraph(){
 bool Graph::dfs(int index){
     for(int i=0;i<map[index].size();i++){
         int index_child=map[index][i];
-        Node * node=nodeList[index_child];
+        shared_ptr<Node> node=nodeList[index_child];
         if(!node->vis){
             node->vis=true;
             if(link[index_child]<0 || dfs(link[index_child])){
