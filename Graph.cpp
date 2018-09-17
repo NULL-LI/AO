@@ -21,7 +21,9 @@ void Graph::constructDirecMap(){
         for(int j=0;j<nodeList.size();j++){
             
             if(j!=i){
-                if((nodeList[j]->flight->time_arrive-nodeList[i]->flight->time_go)>=45){
+                //if((nodeList[j]->flight->time_arrive-nodeList[i]->flight->time_go)>=45){
+                if((nodeList[j]->flight->time_go-nodeList[i]->flight->time_go)>=45){
+
                     adjacent.push_back(j);
                     //cout<<"time go:"<<nodeList[i]->flight->time_go<<"  time arrive"<<nodeList[j]->flight->time_arrive<<endl;
                 }
