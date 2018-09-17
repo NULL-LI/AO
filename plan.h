@@ -17,7 +17,7 @@ public:
 
   double passengerTotalTime;
   double passengerTotalTension;
-int passengerTotalNumber;
+int passengerInBuildingNumber;
 
   bool getpassengerTotalTime();
   bool getpassengerTotalTension();
