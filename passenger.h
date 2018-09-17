@@ -15,6 +15,7 @@ public:
   string flight_leave_number;
   shared_ptr< FLIGHT_GATE> flight_with_gate_arrive_ptr;
   shared_ptr< FLIGHT_GATE> flight_with_gate_leave_ptr;
+  bool inBuilding();
 };
 typedef std::vector<shared_ptr<PASSENGERGROUP>> PassengerGroupList;
 #endif
