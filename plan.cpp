@@ -45,7 +45,49 @@ bool switchable(TIMELINE_GATE time_gate_1, TIMELINE_GATE time_gate_2) {
   }
   return true;
 }
-bool PLAN::updatePassengerFlightGate(){}
+
+bool PLAN::updatePassengerFlightGate()
+{
+    for(int i=0;i<passengerGroupListAll.size();i++)
+    {
+        passengerGroupListAll[i]->flight_with_gate_arrive_ptr = NULL;
+        passengerGroupListAll[i]->flight_with_gate_leave_ptr = NULL;
+
+        for(int j=0;j<FlightGateListOfPlan.size();j++)
+        {
+            if(FlightGateListOfPlan[j]->flight_arrive_number == passengerGroupListAll[i]->flight_arrive_number)
+            {
+                int passenger_arrive_time = passengerGroupListAll[i]->date_arrive - 19;
+                int flight_arrive_time = FlightGateListOfPlan[j]->time_arrive;
+
+                if((passenger_arrive_time == 0 && flight_arrive_time >0 && flight_arrive_time < 1440)
+                        || (passenger_arrive_time == 1 && flight_arrive_time >= 1440 && flight_arrive_time < 2880))
+                {
+                    passengerGroupListAll[i]->flight_with_gate_arrive_ptr = FlightGateListOfPlan[j];
+                }
+            }
+        }
+
+        if(passengerGroupListAll[i]->flight_with_gate_arrive_ptr == NULL)
+            continue;
+
+        for(int j=0;j<FlightGateListOfPlan.size();j++)
+        {
+            if(FlightGateListOfPlan[j]->flight_leave_number == passengerGroupListAll[i]->flight_leave_number)
+            {
+                int passenger_leave_time = passengerGroupListAll[i]->date_leave - 19;
+                int flight_leave_time = FlightGateListOfPlan[j]->time_go;
+
+                if((passenger_leave_time == 2 && flight_leave_time >2880)
+                        || (passenger_leave_time == 1 && flight_leave_time >= 1440 && flight_leave_time < 2880))
+                {
+                    passengerGroupListAll[i]->flight_with_gate_leave_ptr = FlightGateListOfPlan[j];
+                }
+            }
+        }
+    }
+}
+
 bool PLAN::switchGatesRandom() {
   int scheduleNum = schedule.size();
   int switchIdx1 = rand() % (scheduleNum + 1);
