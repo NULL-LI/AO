@@ -17,7 +17,7 @@ bool FLIGHT_GATE::isValid(){
     return true;
 }
 bool FLIGHT::validFlight(shared_ptr<FLIGHT> laterFlight){
-    if(laterFlight->time_go-time_go>=45)
+    if(laterFlight->time_arrive-time_go>=45)
         return true;
     else
         return false;
