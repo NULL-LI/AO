@@ -29,7 +29,7 @@ bool switchable(TIMELINE_GATE time_gate_1, TIMELINE_GATE time_gate_2) {
   }
   return true;
 }
-
+bool PLAN::updatePassengerFlightGate(){}
 bool PLAN::switchGatesRandom() {
   int scheduleNum = schedule.size();
   int switchIdx1 = rand() % (scheduleNum + 1);

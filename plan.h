@@ -26,6 +26,8 @@ public:
   bool switchGatesRandom();
   bool switchGatesBack();
 
+  bool updatePassengerFlightGate();
+
   bool isValid(GATEINFO gateinfo);
 
   bool updateFlightGate();
