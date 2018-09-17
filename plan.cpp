@@ -1,34 +1,45 @@
 #include "plan.h"
 PLAN::PLAN(vector<shared_ptr<TIMELINE_GATE>> timelines, PassengerGroupList pl)
-    : schedule(timelines), passengerGroupListAll(pl), passengerTotalTension(0) {}
+    : schedule(timelines), passengerGroupListAll(pl), passengerTotalTension(0) {
+  srand((unsigned)time(0));
+}
 
 bool PLAN::getpassengerTotalTime() {
   passengerTotalTime = 0;
   for (int iter = 0; iter < passengerGroupListAll.size(); iter++) {
-    if (passengerGroupListAll[iter]->inBuilding()) {int temp_time =
-              formalityTime(passengerGroupListAll[iter]->flight_with_gate_arrive_ptr,
-                            passengerGroupListAll[iter]->flight_with_gate_leave_ptr);
-      passengerTotalTime+=temp_time*(passengerGroupListAll[iter]->peopleNum);
+    if (passengerGroupListAll[iter]->inBuilding()) {
+      int temp_time = formalityTime(
+          passengerGroupListAll[iter]->flight_with_gate_arrive_ptr,
+          passengerGroupListAll[iter]->flight_with_gate_leave_ptr);
+      passengerTotalTime +=
+          temp_time * (passengerGroupListAll[iter]->peopleNum);
     }
   }
   return true;
 }
 
-bool PLAN::getpassengerTotalTension()
-{
-    for(int i=0;i<passengerGroupListAll.size();i++)
-    {
-        double passengerTotalChangeTime = 0;
-        passengerTotalChangeTime += (double)gateWalkingTime(passengerGroupListAll[i]->flight_with_gate_arrive_ptr->gate,passengerGroupListAll[i]->flight_with_gate_leave_ptr->gate);
-        passengerTotalChangeTime += (double)formalityTime(passengerGroupListAll[i]->flight_with_gate_arrive_ptr,passengerGroupListAll[i]->flight_with_gate_leave_ptr);
-        passengerTotalChangeTime += (double)metroTimes(passengerGroupListAll[i]->flight_with_gate_arrive_ptr,passengerGroupListAll[i]->flight_with_gate_leave_ptr);
+bool PLAN::getpassengerTotalTension() {
+  for (int i = 0; i < passengerGroupListAll.size(); i++) {
+    double passengerTotalChangeTime = 0;
+    passengerTotalChangeTime += (double)gateWalkingTime(
+        passengerGroupListAll[i]->flight_with_gate_arrive_ptr->gate,
+        passengerGroupListAll[i]->flight_with_gate_leave_ptr->gate);
+    passengerTotalChangeTime += (double)formalityTime(
+        passengerGroupListAll[i]->flight_with_gate_arrive_ptr,
+        passengerGroupListAll[i]->flight_with_gate_leave_ptr);
+    passengerTotalChangeTime += (double)metroTimes(
+        passengerGroupListAll[i]->flight_with_gate_arrive_ptr,
+        passengerGroupListAll[i]->flight_with_gate_leave_ptr);
 
-        double flight_connect_time = 0;
-        flight_connect_time = (double)passengerGroupListAll[i]->flight_with_gate_leave_ptr->time_go - (double)passengerGroupListAll[i]->flight_with_gate_arrive_ptr->time_arrive;
+    double flight_connect_time = 0;
+    flight_connect_time =
+        (double)passengerGroupListAll[i]->flight_with_gate_leave_ptr->time_go -
+        (double)passengerGroupListAll[i]
+            ->flight_with_gate_arrive_ptr->time_arrive;
 
-        passengerTotalTension += passengerTotalChangeTime/flight_connect_time;
-    }
-    return true;
+    passengerTotalTension += passengerTotalChangeTime / flight_connect_time;
+  }
+  return true;
 }
 
 bool PLAN::getpassengerTotalNumber() {
@@ -66,46 +77,45 @@ bool switchable(TIMELINE_GATE time_gate_1, TIMELINE_GATE time_gate_2) {
   return true;
 }
 
-bool PLAN::updatePassengerFlightGate()
-{
-    for(int i=0;i<passengerGroupListAll.size();i++)
-    {
-        passengerGroupListAll[i]->flight_with_gate_arrive_ptr = NULL;
-        passengerGroupListAll[i]->flight_with_gate_leave_ptr = NULL;
+bool PLAN::updatePassengerFlightGate() {
+  for (int i = 0; i < passengerGroupListAll.size(); i++) {
+    passengerGroupListAll[i]->flight_with_gate_arrive_ptr = NULL;
+    passengerGroupListAll[i]->flight_with_gate_leave_ptr = NULL;
 
-        for(int j=0;j<FlightGateListOfPlan.size();j++)
-        {
-            if(FlightGateListOfPlan[j]->flight_arrive_number == passengerGroupListAll[i]->flight_arrive_number)
-            {
-                int passenger_arrive_time = passengerGroupListAll[i]->date_arrive - 19;
-                int flight_arrive_time = FlightGateListOfPlan[j]->time_arrive;
+    for (int j = 0; j < FlightGateListOfPlan.size(); j++) {
+      if (FlightGateListOfPlan[j]->flight_arrive_number ==
+          passengerGroupListAll[i]->flight_arrive_number) {
+        int passenger_arrive_time = passengerGroupListAll[i]->date_arrive - 19;
+        int flight_arrive_time = FlightGateListOfPlan[j]->time_arrive;
 
-                if((passenger_arrive_time == 0 && flight_arrive_time >0 && flight_arrive_time < 1440)
-                        || (passenger_arrive_time == 1 && flight_arrive_time >= 1440 && flight_arrive_time < 2880))
-                {
-                    passengerGroupListAll[i]->flight_with_gate_arrive_ptr = FlightGateListOfPlan[j];
-                }
-            }
+        if ((passenger_arrive_time == 0 && flight_arrive_time > 0 &&
+             flight_arrive_time < 1440) ||
+            (passenger_arrive_time == 1 && flight_arrive_time >= 1440 &&
+             flight_arrive_time < 2880)) {
+          passengerGroupListAll[i]->flight_with_gate_arrive_ptr =
+              FlightGateListOfPlan[j];
         }
-
-        if(passengerGroupListAll[i]->flight_with_gate_arrive_ptr == NULL)
-            continue;
-
-        for(int j=0;j<FlightGateListOfPlan.size();j++)
-        {
-            if(FlightGateListOfPlan[j]->flight_leave_number == passengerGroupListAll[i]->flight_leave_number)
-            {
-                int passenger_leave_time = passengerGroupListAll[i]->date_leave - 19;
-                int flight_leave_time = FlightGateListOfPlan[j]->time_go;
-
-                if((passenger_leave_time == 2 && flight_leave_time >2880)
-                        || (passenger_leave_time == 1 && flight_leave_time >= 1440 && flight_leave_time < 2880))
-                {
-                    passengerGroupListAll[i]->flight_with_gate_leave_ptr = FlightGateListOfPlan[j];
-                }
-            }
-        }
+      }
     }
+
+    if (passengerGroupListAll[i]->flight_with_gate_arrive_ptr == NULL)
+      continue;
+
+    for (int j = 0; j < FlightGateListOfPlan.size(); j++) {
+      if (FlightGateListOfPlan[j]->flight_leave_number ==
+          passengerGroupListAll[i]->flight_leave_number) {
+        int passenger_leave_time = passengerGroupListAll[i]->date_leave - 19;
+        int flight_leave_time = FlightGateListOfPlan[j]->time_go;
+
+        if ((passenger_leave_time == 2 && flight_leave_time > 2880) ||
+            (passenger_leave_time == 1 && flight_leave_time >= 1440 &&
+             flight_leave_time < 2880)) {
+          passengerGroupListAll[i]->flight_with_gate_leave_ptr =
+              FlightGateListOfPlan[j];
+        }
+      }
+    }
+  }
 }
 
 bool PLAN::switchGatesRandom() {
@@ -266,5 +276,51 @@ bool PLAN::fillInEmptyTimeline() { // fill the open gates with empty schedule
   return true;
 }
 
-bool PLAN::optimizeTotalTime(int iter) { return true; }
-bool PLAN::optimizeTotalTension(int iter) { return true; }
+bool PLAN::optimizeTotalTime(int iter) {
+  for (int i = 0; i < iter; i++) {
+    int timeStore = passengerTotalTime;
+    switchGatesRandom();
+    updateFlightGate();
+    updatePassengerFlightGate();
+    getpassengerTotalTime();
+
+    if (passengerTotalTime < timeStore) {
+      continue;
+    } else {
+      double probabilityAccept = exp(timeStore - passengerTotalTime);
+      if (rand() / double(RAND_MAX) < probabilityAccept) {
+        continue;
+      } else {
+        switchGatesBack();
+        updateFlightGate();
+        updatePassengerFlightGate();
+      }
+    }
+    printf("passengerTotalTime %f\n", passengerTotalTime);
+  }
+  return true;
+}
+bool PLAN::optimizeTotalTension(int iter) {
+  for (int i = 0; i < iter; i++) {
+    double tensionStore = passengerTotalTension;
+    switchGatesRandom();
+    updateFlightGate();
+    updatePassengerFlightGate();
+    getpassengerTotalTension();
+
+    if (passengerTotalTension > tensionStore) {
+      continue;
+    } else {
+      double probabilityAccept = exp(-tensionStore + passengerTotalTension);
+      if (rand() / double(RAND_MAX) < probabilityAccept) {
+        continue;
+      } else {
+        switchGatesBack();
+        updateFlightGate();
+        updatePassengerFlightGate();
+      }
+    }
+    printf("passengerTotalTension %f\n", passengerTotalTension);
+  }
+  return true;
+}
