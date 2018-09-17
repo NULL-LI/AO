@@ -59,10 +59,10 @@ int main()
 	flight_groups.push_back(flight_wdd);
 	flight_groups.push_back(flight_wid);
 	flight_groups.push_back(flight_wdi);
-
+	cout<<"wdd:"<<flight_wdd.size()<<endl;
 
 	shared_ptr<Graph> graph;
-	printf("%4s%4s%4s%4s%4s%4s%4s%4s\n","wii","wdd","wid","wdi","wii","wdd","wid","wdi");
+	printf("%4s%4s%4s%4s%4s%4s%4s%4s\n","nii","ndd","nid","ndi","wii","wdd","wid","wdi");
 	for(int i=0;i<flight_groups.size();i++){
 		graph.reset(new Graph(flight_groups[i]));
 		graph->solve();
@@ -70,7 +70,7 @@ int main()
 		printf("%4d",path_num);
 	}
 	cout<<endl;
-	mesh->getGateInfo();
+	//mesh->getGateInfo();
 	//cout<<"n i i:"<<mesh->gateInfoAll.gateNum_Narrow_I_I<<endl;
 
 
