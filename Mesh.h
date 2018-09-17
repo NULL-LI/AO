@@ -25,8 +25,8 @@ public:
   Size getTypeSize(string type);
 };
 
-typedef std::vector<Flight *> FlightList;
-typedef std::vector<GATE *> GateList;
+typedef std::vector<shared_ptr<Flight>> FlightList;
+typedef std::vector<shared_ptr<GATE >> GateList;
 
 class Mesh {
 public:

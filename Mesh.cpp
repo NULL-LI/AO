@@ -24,7 +24,8 @@ void Mesh::addFlights(string flights_name) {
     if (date_arrive == 20 || date_go == 20) {
       cout << "arrive" << date_arrive << " go" << date_go << endl;
       cout << "pages:" << page << endl;
-      Flight *flight = new Flight();
+      shared_ptr<Flight>flight;
+      flight.reset(new Flight());
       flight->id = stoi(fields[0].substr(2, 3));
       int hour, minute;
       // char * date_time = fields[2].data();
@@ -92,8 +93,9 @@ void Mesh::addGates(string gates_src_name) {
       gate_direction = Center;
     }
     Size gate_size = (fields[5] == "W" ? W : N);
-    GATE *gate_tmp = new GATE(id, gate_building, gate_num, gate_size,
-                          gate_direction, fields[3], fields[4]);
+    shared_ptr<GATE>gate_tmp;
+    gate_tmp.reset( new GATE(id, gate_building, gate_num, gate_size,
+                          gate_direction, fields[3], fields[4]));
     gateListAll.push_back(gate_tmp);
   }
 }
@@ -101,8 +103,10 @@ void Mesh::addGates(string gates_src_name) {
 void Mesh::clear() {
   size_t i;
   for (i = 0; i < flightListAll.size(); i++) {
-    if (flightListAll[i] != NULL)
-      delete flightListAll[i];
+    if (flightListAll[i] != NULL){
+      
+    }
+//      delete flightListAll[i];
   }
 }
 

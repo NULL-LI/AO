@@ -6,7 +6,7 @@
 
 class PLAN{
 public:
-    vector<TIMELINE*>schedule;
+    vector<shared_ptr<TIMELINE>>schedule;
 
 
 };
