@@ -50,7 +50,7 @@ int main()
 		}//end if w
 	}//end for
 
-	vector<FlightList> flght_groups;
+	vector<FlightList> flight_groups;
 	flight_groups.push_back(flight_nii);
 	flight_groups.push_back(flight_ndd);
 	flight_groups.push_back(flight_nid);
@@ -67,7 +67,7 @@ int main()
 		graph.reset(new Graph(flight_groups[i]));
 		graph->solve();
 		int path_num=graph->path_list.size();
-		printf("%4d",&path_num);
+		printf("%4d",path_num);
 	}
 	cout<<endl;
 	mesh->getGateInfo();

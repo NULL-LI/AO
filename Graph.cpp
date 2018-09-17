@@ -129,8 +129,8 @@ void Graph::findPath(){
             path_list.push_back(one_path);   
         }//end if
     }//end for
-    cout<<"path num:"<<path_num<<endl;
-    cout<<"path found:"<<path_found<<endl;
+   // cout<<"path num:"<<path_num<<endl;
+   // cout<<"path found:"<<path_found<<endl;
 }
 
 void Graph::solve(){
