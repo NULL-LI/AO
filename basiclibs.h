@@ -12,6 +12,7 @@
 #include <boost/smart_ptr.hpp>
 #include <boost/make_shared.hpp>
 using namespace std;
+
 enum Size { W, N };
 enum FlyType { D, I };
 enum Building { T, S };

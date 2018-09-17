@@ -2,9 +2,10 @@
 
 Graph::Graph(FlightList flightGroup){
     for(int i=0;i<flightGroup.size();i++){
-        Node *node=new Node();
+        shared_ptr<Node> node(new Node());
         node->flight=flightGroup[i];
         //node->vis=false;
+        nodeList.push_back(node);
     }
 }
 Graph::~Graph(){
@@ -20,8 +21,9 @@ void Graph::constructDirecMap(){
         for(int j=0;j<nodeList.size();j++){
             
             if(j!=i){
-                if((nodeList[i]->flight->time_go-nodeList[j]->flight->time_arrive)>=45){
+                if((nodeList[j]->flight->time_arrive-nodeList[i]->flight->time_go)>=45){
                     adjacent.push_back(j);
+                    //cout<<"time go:"<<nodeList[i]->flight->time_go<<"  time arrive"<<nodeList[j]->flight->time_arrive<<endl;
                 }
             }//end if
         }//end for
@@ -33,7 +35,7 @@ void Graph::constructDirecMap(){
 void Graph::constructBinaryGraph(){
     //two nodes,x-parent/y-child
     //in child nodes, FLight* is NULL
-    size_t initial_size=nodeList.size();
+    int initial_size=nodeList.size();
     //augment map size
     for(int i=0;i<initial_size;i++){
         vector<int> adjacent;
@@ -47,13 +49,16 @@ void Graph::constructBinaryGraph(){
         //update map
         for(int j=0;j<map[i].size();j++){
             map[i][j]+=initial_size;
-            map[map[i][i]].push_back(i);
+            map[map[i][j]].push_back(i);
         }
 
     }
     //update link
     link=new int[nodeList.size()];
-    CLR(link);
+    //CLR(link);
+    for(int i=0;i<nodeList.size();i++){
+        link[i]=-1;
+    }
 }
 //dfs propagration
 bool Graph::dfs(int index){
@@ -99,9 +104,9 @@ void Graph::findPath(){
         if(link[i]>=0){
             adjacent.push_back(link[i]);
         }
+        //cout<<adjacent[0]<<endl;
         map2.push_back(adjacent);
     }
-
     //path will be found in map2
     int path_found=0;
     for(int i=0;i<initial_node_size;i++){
@@ -114,14 +119,18 @@ void Graph::findPath(){
             FlightList one_path;
             one_path.push_back(nodeList[i]->flight);
             int sig=i;
+            //cout<<map2[map2[sig][0]][0]<<"  "<<map2[map2[sig][0]][1]<<endl;
             while(map2[map2[sig][0]].size()==2){
+                //cout<<"2"<<endl;
                 sig=map2[map2[sig][0]][1];
-                one_path.push_back(nodeList[sig]->flight);
+                nodeList[sig]->vis=false;
+                one_path.insert(one_path.begin(),nodeList[sig]->flight);
             }
             path_list.push_back(one_path);   
         }//end if
     }//end for
-
+    cout<<"path num:"<<path_num<<endl;
+    cout<<"path found:"<<path_found<<endl;
 }
 
 void Graph::solve(){

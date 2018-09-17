@@ -2,7 +2,7 @@
 
 #include "Mesh.h"
 
-#define CLR(x) memset(x,-1,sizeof(x))
+#define CLR(x) memset(x,0,sizeof(x))
 #ifndef graph_h
 #define graph_h
 
