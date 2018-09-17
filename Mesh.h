@@ -55,8 +55,8 @@ public:
   GATEINFO gateInfoAll;
   Mesh() {}
   ~Mesh() { clear(); }
-  void addFlights(string flights_source_file_name);
-  void addGates(string gates_src_name) ;
+  bool addFlights(string flights_source_file_name);
+  bool addGates(string gates_src_name) ;
   bool getGateInfo();
   void clear();
   string Trim(string &str);

@@ -1,6 +1,6 @@
 #include "Mesh.h"
 
-void Mesh::addFlights(string flights_name) {
+bool Mesh::addFlights(string flights_name) {
   ifstream fin(flights_name);
   string line;
   int page = 0;
@@ -46,18 +46,25 @@ void Mesh::addFlights(string flights_name) {
       flight->flight_arrive = fields[3];
       flight->flight_go = fields[8];
       flightListAll.push_back(flight);
-    } // if
+    }
 
-  } // for
-  for (int i = 0; i < flightListAll.size(); i++) {
-    cout << "id:" << flightListAll[i]->id
-         << " flight arrive:" << flightListAll[i]->flight_arrive
-         << "type arrive:" << flightListAll[i]->type_arrive << endl;
+  }
+//  for (int i = 0; i < flightListAll.size(); i++) {
+//    cout << "id:" << flightListAll[i]->id
+//         << " flight arrive:" << flightListAll[i]->flight_arrive
+//         << "type arrive:" << flightListAll[i]->type_arrive << endl;
+//  }
+  if (flightListAll.empty() == true) {
+    cout<<"Flight list empty!"<<endl;
+    return false;
+  } else {
+    printf("Read %ld flights\n",flightListAll.size());
+    return true;
   }
   // cout << "pages:" << page << endl;
 }
 
-void Mesh::addGates(string gates_src_name) {
+bool Mesh::addGates(string gates_src_name) {
   ifstream fin(gates_src_name);
   string line;
   int gates_cnt = 0;
@@ -98,6 +105,14 @@ void Mesh::addGates(string gates_src_name) {
                             gate_direction, fields[3], fields[4]));
     gateListAll.push_back(gate_tmp);
   }
+  if (gateListAll.empty() == true) {
+    cout<<"Gate list empty!"<<endl;
+    return false;
+  } else {
+    printf("Read %ld gates\n",gateListAll.size());
+    getGateInfo();
+    return true;
+  }
 }
 
 void Mesh::clear() {
@@ -124,4 +139,60 @@ Size Flight::getTypeSize(string type) {
       return W;
   }
   return N;
+}
+
+bool Mesh::getGateInfo()
+{
+  if (gateListAll.empty() == true) {
+    cout<<"Gate list empty, no gate info!"<<endl;
+    return false;
+  }
+  gateInfoAll.gateNum_Total=(int)gateListAll.size();
+    for(int i=0;i<gateListAll.size();i++) {
+      set<FlyType> FlyType_DI = {D, I};
+      set<FlyType> FlyType_I = {I};
+      set<FlyType> FlyType_D = {D};
+
+      if (gateListAll[i]->gate_size == N) {
+        if (gateListAll[i]->gate_arrive_type == FlyType_I&&gateListAll[i]->gate_leave_type == FlyType_I) {
+          gateInfoAll.gateNum_Narrow_I_I+=1;
+        } else if (gateListAll[i]->gate_arrive_type == FlyType_D&&gateListAll[i]->gate_leave_type == FlyType_D) {
+          gateInfoAll.gateNum_Narrow_D_D+=1;
+        }else if (gateListAll[i]->gate_arrive_type == FlyType_I&&gateListAll[i]->gate_leave_type == FlyType_DI) {
+          gateInfoAll.gateNum_Narrow_I_DI+=1;
+        }else if (gateListAll[i]->gate_arrive_type == FlyType_DI&&gateListAll[i]->gate_leave_type == FlyType_I) {
+          gateInfoAll.gateNum_Narrow_DI_I+=1;
+        }else if (gateListAll[i]->gate_arrive_type == FlyType_D&&gateListAll[i]->gate_leave_type == FlyType_DI) {
+          gateInfoAll.gateNum_Narrow_D_DI+=1;
+        }else if (gateListAll[i]->gate_arrive_type == FlyType_DI&&gateListAll[i]->gate_leave_type == FlyType_D) {
+          gateInfoAll.gateNum_Narrow_DI_D+=1;
+        }else if (gateListAll[i]->gate_arrive_type == FlyType_DI&&gateListAll[i]->gate_leave_type == FlyType_DI) {
+          gateInfoAll.gateNum_Narrow_DI_DI+=1;
+        }else{
+          perror("gate DI type error\n");
+        }
+      }else if (gateListAll[i]->gate_size == W) {
+        if (gateListAll[i]->gate_arrive_type == FlyType_I&&gateListAll[i]->gate_leave_type == FlyType_I) {
+          gateInfoAll.gateNum_Wide_I_I+=1;
+        } else if (gateListAll[i]->gate_arrive_type == FlyType_D&&gateListAll[i]->gate_leave_type == FlyType_D) {
+          gateInfoAll.gateNum_Wide_D_D+=1;
+        }else if (gateListAll[i]->gate_arrive_type == FlyType_I&&gateListAll[i]->gate_leave_type == FlyType_DI) {
+          gateInfoAll.gateNum_Wide_I_DI+=1;
+        }else if (gateListAll[i]->gate_arrive_type == FlyType_DI&&gateListAll[i]->gate_leave_type == FlyType_I) {
+          gateInfoAll.gateNum_Wide_DI_I+=1;
+        }else if (gateListAll[i]->gate_arrive_type == FlyType_D&&gateListAll[i]->gate_leave_type == FlyType_DI) {
+          gateInfoAll.gateNum_Wide_D_DI+=1;
+        }else if (gateListAll[i]->gate_arrive_type == FlyType_DI&&gateListAll[i]->gate_leave_type == FlyType_D) {
+          gateInfoAll.gateNum_Wide_DI_D+=1;
+        }else if (gateListAll[i]->gate_arrive_type == FlyType_DI&&gateListAll[i]->gate_leave_type == FlyType_DI) {
+          gateInfoAll.gateNum_Wide_DI_DI+=1;
+        }else{
+          perror("gate DI type error\n");
+        }
+      }else{
+        perror("gate WN type error\n");
+      }
+    }
+    return true;
+
 }
