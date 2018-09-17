@@ -4,7 +4,9 @@ PLAN::PLAN(vector<shared_ptr<TIMELINE_GATE>> timelines, PassengerGroupList pl)
 
 bool PLAN::getpassengerTotalTime() { return true; }
 bool PLAN::getpassengerTotalTension() { return true; }
+bool PLAN::getPassengerGate(PASSENGERGROUP &passengerGroup){
 
+}
 bool switchable(TIMELINE_GATE time_gate_1, TIMELINE_GATE time_gate_2) {
   if (time_gate_1.sizeNW != time_gate_2.sizeNW) {
     return false;
