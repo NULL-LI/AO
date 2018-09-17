@@ -55,21 +55,6 @@ int main() {
   flight_groups.push_back(flight_wdi);
   cout << "wdd:" << flight_wdd.size() << endl;
 
-  int side_stop = 0;
-  //
-  ofstream outFile;
-  outFile.open("../data/result.csv", ios::out);
-
-	vector<FlightList> flight_groups;
-	flight_groups.push_back(flight_nii);
-	flight_groups.push_back(flight_ndd);
-	flight_groups.push_back(flight_nid);
-	flight_groups.push_back(flight_ndi);
-	flight_groups.push_back(flight_wii);
-	flight_groups.push_back(flight_wdd);
-	flight_groups.push_back(flight_wid);
-	flight_groups.push_back(flight_wdi);
-	//cout<<"wdd:"<<flight_wdd.size()<<endl;
 
 	int side_stop=0;
 	//
