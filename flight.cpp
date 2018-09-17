@@ -16,3 +16,9 @@ FLIGHT_GATE::FLIGHT_GATE(const FLIGHT flight_init,const GATE gate_init):FLIGHT(f
 bool FLIGHT_GATE::isValid(){
     return true;
 }
+bool FLIGHT::validFlight(shared_ptr<FLIGHT> laterFlight){
+    if(laterFlight->time_go-time_go>=45)
+        return true;
+    else
+        return false;
+}

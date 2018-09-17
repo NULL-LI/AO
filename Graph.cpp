@@ -22,7 +22,7 @@ void Graph::constructDirecMap(){
             
             if(j!=i){
                 //if((nodeList[j]->flight->time_arrive-nodeList[i]->flight->time_go)>=45){
-                if((nodeList[j]->flight->time_go-nodeList[i]->flight->time_go)>=45){
+                if(nodeList[i]->flight->validFlight(nodeList[j]->flight)){
 
                     adjacent.push_back(j);
                     //cout<<"time go:"<<nodeList[i]->flight->time_go<<"  time arrive"<<nodeList[j]->flight->time_arrive<<endl;
@@ -82,7 +82,8 @@ bool Graph::dfs(int index){
 void Graph::findPair(){
     //update link
     for(int i=0;i<nodeList.size();i++){
-        if(link[i] <0 && dfs(i))//self is not in the pair
+        
+        if(link[nodeList.size()-1-i] <0 && dfs(i))//self is not in the pair
             path_num++;
     }
 }

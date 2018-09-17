@@ -2,6 +2,7 @@
 #include "gate.h"
 #ifndef flight_h
 #define flight_h
+class Flight;
 
 static string wide_size_names[6] = {"332", "333", "33E", "33H", "33L", "773"};
 class FLIGHT {
@@ -19,6 +20,7 @@ public:
   FLIGHT() {}
   int timeDiff(int time1, int time2);
   Size getTypeSize(string type);
+  bool validFlight(shared_ptr<FLIGHT> laterFlight);
 };
 typedef std::vector<shared_ptr<FLIGHT>> FlightList;
 
