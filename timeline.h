@@ -13,11 +13,12 @@ public:
   set<FlyType> leave_DI_type;
   Size sizeNW;
   bool validFlag= false;
+  GateType gate_type;
   TIMELINE(const FlightList FlightsOfLine_init);
   bool isValid();
   bool getDelayNum();
   bool getDIType();
-    bool getSize();
+  bool getSize();
 };
 
 
