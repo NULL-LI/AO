@@ -60,10 +60,12 @@ bool PLAN::getpassengerTotalNumber() {
 // bool PLAN::getPassengerGate(PASSENGERGROUP &passengerGroup){
 //
 //}
-bool switchable(TIMELINE_GATE time_gate_1, TIMELINE_GATE time_gate_2) {
-  if (time_gate_1.sizeNW != time_gate_2.sizeNW) {
+bool switchable( TIMELINE_GATE time_gate_1, TIMELINE_GATE time_gate_2) {
+  if (time_gate_1.gate.gate_size != time_gate_2.gate.gate_size) {
     return false;
   }
+  time_gate_1.getDIType();
+  time_gate_2.getDIType();
   if (!gateCompatible(time_gate_1.arrive_DI_type,
                       time_gate_2.gate.gate_arrive_type)) {
     return false;
@@ -131,11 +133,12 @@ bool PLAN::switchGatesRandom() {
   do {
     switchIdx1 = rand() % (scheduleNum + 1);
     switchIdx2 = rand() % (scheduleNum + 1);
-  } while (!switchable(*schedule[switchIdx1], *schedule[switchIdx2]));
+  } while (!switchable(*schedule[switchIdx1], *schedule[switchIdx2])||switchIdx1==switchIdx2);
 
   GATE temp_gate = schedule[switchIdx1]->gate;
   schedule[switchIdx1]->gate = schedule[switchIdx2]->gate;
   schedule[switchIdx2]->gate = temp_gate;
+
 
   switchedScheduleIdx1 = switchIdx1;
   switchedScheduleIdx2 = switchIdx2;
@@ -240,8 +243,12 @@ bool PLAN::isValid(GATEINFO gateinfo) {
   return true;
 }
 
-bool PLAN::updateFlightGate() {
+bool PLAN::initFlightGate() {
+  FlightGateListOfPlan.clear();
   for (int ite_sche = 0; ite_sche < schedule.size(); ite_sche++) {
+    if(schedule[ite_sche]->FlightsOfLine.empty()){
+      continue;
+    } else{
     for (int ite_fli = 0; ite_fli < schedule[ite_sche]->FlightsOfLine.size();
          ite_fli++) {
       shared_ptr<FLIGHT_GATE> flight_gate;
@@ -249,6 +256,30 @@ bool PLAN::updateFlightGate() {
           new FLIGHT_GATE(*schedule[ite_sche]->FlightsOfLine[ite_fli],
                           schedule[ite_sche]->gate));
       FlightGateListOfPlan.push_back(flight_gate);
+    }
+    }
+  }
+  return true;
+}
+
+bool PLAN::updateFlightGate(){
+//  FlightGateListOfPlan.clear();
+  for (int ite_sche = 0; ite_sche < schedule.size(); ite_sche++) {
+    if(schedule[ite_sche]->FlightsOfLine.empty()){
+      continue;
+    } else{
+      for (int ite_fli = 0; ite_fli < schedule[ite_sche]->FlightsOfLine.size();
+           ite_fli++) {
+        for(int ite_fli_gate=0;ite_fli_gate<FlightGateListOfPlan.size();ite_fli_gate++){
+          if(schedule[ite_sche]->FlightsOfLine[ite_fli]->id ==FlightGateListOfPlan[ite_fli_gate]->id)
+          {
+            FlightGateListOfPlan[ite_fli_gate]->gate=schedule[ite_sche]->gate;
+            break;
+          } else{
+            continue;
+          }
+        }
+      }
     }
   }
   return true;
@@ -265,13 +296,16 @@ bool PLAN::fillInEmptyTimeline() { // fill the open gates with empty schedule
       }
     }
   }
+  printf("tempGateList.size(): %ld\n",tempGateList.size());
+  printf("schedule.size(): %ld\n",schedule.size());
+  printf("gateListAll.size(): %ld\n",gateListAll.size());
+
   for (int ite_gate = 0; ite_gate < tempGateList.size(); ite_gate++) {
-    shared_ptr<TIMELINE_GATE> timeline_gate_ptr_temp;
+
     FlightList Flights_temp;
     Flights_temp.clear();
     TIMELINE timeline_temp(Flights_temp);
-    timeline_gate_ptr_temp.reset(
-        new TIMELINE_GATE(Flights_temp, *tempGateList[ite_gate]));
+    shared_ptr<TIMELINE_GATE> timeline_gate_ptr_temp(new TIMELINE_GATE(Flights_temp, *tempGateList[ite_gate]));
 
     schedule.push_back(timeline_gate_ptr_temp);
   }
@@ -283,27 +317,40 @@ bool PLAN::fillInEmptyTimeline() { // fill the open gates with empty schedule
 }
 
 bool PLAN::optimizeTotalTime(int iter) {
+  const double T_k=0.9;
+  const double EPS=1e-6;
+double T_now=10;
+  printf("iter %d\n",iter);
+  while (T_now>EPS){
   for (int i = 0; i < iter; i++) {
     printf("i %d\n",i);
     int timeStore = passengerTotalTime;
+
+//    printf("size: %ld %ld %ld %ld ",schedule.size(),gateListAll.size(),FlightGateListOfPlan.size(),passengerGroupListAll.size());
+
     switchGatesRandom();
     updateFlightGate();
     updatePassengerFlightGate();
     getpassengerTotalTime();
 
-    if (passengerTotalTime < timeStore) {//success accept
+    double dE=passengerTotalTime-timeStore;
+
+    if (dE < 0) {//success accept
       continue;
     } else {
-      double probabilityAccept = exp(timeStore - passengerTotalTime);
+      double probabilityAccept = exp((-dE)/T_now);
       if (rand() / double(RAND_MAX) < probabilityAccept) {
         continue;
       } else {
         switchGatesBack();
         updateFlightGate();
         updatePassengerFlightGate();
+        getpassengerTotalTime();
       }
     }
     printf("passengerTotalTime average %f\n", passengerTotalTime/(double)passengerInBuildingNumber);
+  }
+    T_now*=T_k;
   }
   return true;
 }

@@ -12,11 +12,14 @@ bool TIMELINE::isValid() {
     validFlag = false;
     cout << "TIMELINE invalid" << endl;
   }
-
   return validFlag;
 }
 bool TIMELINE::getDelayNum() {
   this->delayFlightNum = 0;
+  if (FlightsOfLine.size() == 0) {
+    return true;
+  }
+
   for (int i = 0; i < FlightsOfLine.size() - 1; i++) {
     if (FlightsOfLine[i]->time_go + 45 > FlightsOfLine[i + 1]->time_go) {
       return false;
@@ -31,6 +34,9 @@ bool TIMELINE::getDelayNum() {
 bool TIMELINE::getDIType() {
   this->arrive_DI_type = {};
   this->leave_DI_type = {};
+  if (FlightsOfLine.size() == 0) {
+    return true;
+  }
   for (int i = 0; i < FlightsOfLine.size(); i++) {
     set<FlyType>::iterator iter;
     iter = arrive_DI_type.find(FlightsOfLine[i]->type_arrive);
@@ -46,6 +52,9 @@ bool TIMELINE::getDIType() {
 }
 
 bool TIMELINE::getSize() {
+  if (FlightsOfLine.size() == 0) {
+    return true;
+  }
   sizeNW = FlightsOfLine[0]->plane_size;
   for (int i = 0; i < FlightsOfLine.size(); i++) {
     if (FlightsOfLine[0]->plane_size != sizeNW) {
@@ -80,15 +89,18 @@ bool TIMELINE_GATE::isValid() {
   return validFlag;
 }
 
-bool gateCompatible(const set<FlyType > DI_Flight,const set<FlyType > DI_Gate){
+bool gateCompatible(const set<FlyType> DI_Flight, const set<FlyType> DI_Gate) {
   set<FlyType>::iterator iter;
-  for (auto iter_flight=DI_Flight.begin();iter_flight!=DI_Flight.end();iter_flight++)
-  {
-  iter = DI_Gate.find(*iter_flight);
-  if (iter == DI_Gate.end()) { //not found
-    return false;
-  }
-  }
+  if (DI_Flight.empty()) {
     return true;
-
+  } else {
+    for (auto iter_flight = DI_Flight.begin(); iter_flight != DI_Flight.end();
+         iter_flight++) {
+      iter = DI_Gate.find(*iter_flight);
+      if (iter == DI_Gate.end()) { // not found
+        return false;
+      }
+    }
+  }
+  return true;
 }

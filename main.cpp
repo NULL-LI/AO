@@ -37,15 +37,17 @@ int main() {
 
 	}
 	cout<<"gate used num:"<<gate_num<<endl;
-
+	plan->gateListAll=mesh->gateListAll;
+	plan->initFlightGate();
 	plan->updateFlightGate();
 	plan->updatePassengerFlightGate();
 	plan->getpassengerTotalNumber();
+	plan->fillInEmptyTimeline();
 	plan->getpassengerTotalTime();
 	plan->getpassengerTotalTension();
 
-	plan->optimizeTotalTime(100);
-
+	bool bool_opti_time= plan->optimizeTotalTime(100);
+printf("bool_opti_time : %s\n",bool_opti_time ?"true":"false");
 
   
 

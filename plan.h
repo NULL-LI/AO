@@ -33,11 +33,11 @@ int passengerInBuildingNumber;
   bool isValid(GATEINFO gateinfo);
 
   bool updateFlightGate();
-
+    bool initFlightGate();
   bool fillInEmptyTimeline();
 
   bool optimizeTotalTime(int iter);
   bool optimizeTotalTension(int iter);
 };
-
+bool switchable(const TIMELINE_GATE time_gate_1,const TIMELINE_GATE time_gate_2);
 #endif
