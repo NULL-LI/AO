@@ -357,7 +357,7 @@ double T_now=100;
 }
 bool PLAN::optimizeTotalTension() {
   int iter_max=20;
-  const double T_k=0.9;
+  const double T_k=0.95;
   const double EPS=1e-5;
   double T_now=1;
   while (T_now>EPS){
