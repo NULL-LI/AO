@@ -387,7 +387,6 @@ void Solution1::saveResult(){
         else
             gate_wide++;
 		gate_num++;
-		cout<<endl;
 	}
     int narrow_flights_all=0;
     int wide_flights_all=0;
@@ -403,6 +402,37 @@ void Solution1::saveResult(){
     outFile<<"time duration in t,"<<time_duration_t<<",time duration s,"<<time_duration_s<<endl;
 
     outFile.close();
+
+    //save in csv
+
+    ifstream fin("../data/pucks.csv");
+    vector<string> fin_content;
+    string line;
+    while (getline(fin,line )){
+        fin_content.push_back(mesh->Trim(line));
+    }
+    for(int i=0;i<plan->schedule.size();i++){
+        string gate_ts;
+        if(plan->schedule[i]->gate.gate_building==T){
+            gate_ts=",T";
+        }else{
+            gate_ts=",S";
+        }
+        gate_ts +=std::to_string(plan->schedule[i]->gate.id);
+		for(int j=0;j<plan->schedule[i]->FlightsOfLine.size();j++){
+            fin_content[plan->schedule[i]->FlightsOfLine[j]->id-1] +=gate_ts;
+        }
+    }
+    fin.close();
+
+    ofstream writeFile("../data/pucks_v1.csv");
+    for(int i=0;i<fin_content.size();i++){
+        writeFile<<fin_content[i]<<endl;
+    }
+    writeFile.close();
+    cout<<"haha"<<endl;
+
+
 
 }
 
