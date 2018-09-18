@@ -43,7 +43,7 @@ public:
         getWideCombine();
         getNarrowCombine();
         constructTimeline();
-        //saveResult();
+        saveResult();
     }
     void saveResult();
 

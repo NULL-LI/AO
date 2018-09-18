@@ -1,5 +1,6 @@
 #include "solution1.h"
 bool maxFirst(FlightList &f1,FlightList &f2);
+bool stringFirst(vector<string> &s1,vector<string> s2);
 void Solution1::getInitialPath(){
     FlightList flight_nii, flight_ndd, flight_nid, flight_ndi;
     FlightList flight_wii, flight_wdd, flight_wid, flight_wdi;
@@ -432,11 +433,41 @@ void Solution1::saveResult(){
     writeFile.close();
     cout<<"haha"<<endl;
 
+    ofstream write_gate("../data/gates_pucks.csv");
+    vector<vector<string>> contents;
+    for(int i=0;i<plan->schedule.size();i++){
+        vector<string> gate_ts;
+        string gate;
+        if(plan->schedule[i]->gate.gate_building==T){
+            gate="T";
+        }else{
+            gate="S";
+        }
+        gate_ts.push_back(gate+std::to_string(plan->schedule[i]->gate.id));
+		for(int j=0;j<plan->schedule[i]->FlightsOfLine.size();j++){
+            gate_ts.push_back("PK"+std::to_string(plan->schedule[i]->FlightsOfLine[j]->id));
+            //fin_content[plan->schedule[i]->FlightsOfLine[j]->id-1] +=gate_ts;  
+        }
+        contents.push_back(gate_ts);
+    }
+    sort(contents.begin(),contents.end(),stringFirst);
+    for(int i=0;i<contents.size();i++){
+        for(int j=0;j<contents[i].size();j++){
+            write_gate<<contents[i][j]+",";
+        }
+        write_gate<<endl;
+    }
+    write_gate.close();
+
+
 
 
 }
 
 bool maxFirst(FlightList &f1,FlightList &f2){
     return f1.size()>f2.size();
+}
+bool stringFirst(vector<string> &s1,vector<string> s2){
+    return s1[0]<s2[0];
 }
     
