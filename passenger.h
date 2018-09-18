@@ -16,8 +16,8 @@ public:
   shared_ptr<FLIGHT_GATE> flight_with_gate_arrive_ptr;
   shared_ptr<FLIGHT_GATE> flight_with_gate_leave_ptr;
   bool inBuilding();
-    bool ifFailQ2();
-    bool ifFailQ3();
+    bool ifSuccessQ2();
+    bool ifSuccessQ3();
 
 };
 typedef std::vector<shared_ptr<PASSENGERGROUP>> PassengerGroupList;

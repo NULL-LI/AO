@@ -11,19 +11,19 @@ public:
   FlightGateList FlightGateListOfPlan;
   PassengerGroupList passengerGroupListAll;
 
-  int switchedScheduleIdx1,switchedScheduleIdx2;
+  int switchedScheduleIdx1, switchedScheduleIdx2;
 
   PLAN(vector<shared_ptr<TIMELINE_GATE>> timelines, PassengerGroupList pl);
 
   double passengerTotalTime;
   double passengerTotalTension;
-int passengerInBuildingNumber;
+  int passengerInBuildingNumber;
 
   bool getpassengerTotalTime();
   bool getpassengerTotalTension();
-    bool getpassengerTotalNumber();
+  bool getpassengerTotalNumber();
 
-//  bool getPassengerGate(PASSENGERGROUP &passengerGroup);
+  //  bool getPassengerGate(PASSENGERGROUP &passengerGroup);
 
   bool switchGatesRandom();
   bool switchGatesBack();
@@ -33,13 +33,18 @@ int passengerInBuildingNumber;
   bool isValid(GATEINFO gateinfo);
 
   bool updateFlightGate();
-    bool initFlightGate();
+  bool initFlightGate();
   bool fillInEmptyTimeline();
 
   bool optimizeTotalTime();
   bool optimizeTotalTension();
 
-    bool printAllocation();
+  bool printAllocation();
+
+  int passengerQ3FailNum();
+  int passengerQ2FailNum();
+
 };
-bool switchable(const TIMELINE_GATE time_gate_1,const TIMELINE_GATE time_gate_2);
+bool switchable(const TIMELINE_GATE time_gate_1,
+                const TIMELINE_GATE time_gate_2);
 #endif

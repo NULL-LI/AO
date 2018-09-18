@@ -84,7 +84,7 @@ int formalityTime(shared_ptr<FLIGHT_GATE> flightGateArrive,shared_ptr<FLIGHT_GAT
 }
 
 
-int metroTimes(shared_ptr<FLIGHT_GATE> flightGateArrive,shared_ptr<FLIGHT_GATE> flightGateLeave){
+int metroTime(shared_ptr<FLIGHT_GATE> flightGateArrive,shared_ptr<FLIGHT_GATE> flightGateLeave){
     int formalityTimeTable[4][4] = {
             {0,1,0,1},
             {1,0,1,0},
@@ -140,5 +140,5 @@ int metroTimes(shared_ptr<FLIGHT_GATE> flightGateArrive,shared_ptr<FLIGHT_GATE> 
                 perror("get timeGateIdx error\n");
         }
     }
-    return formalityTimeTable[formalityTimeArriveIdx][formalityTimeLeaveIdx];
+    return formalityTimeTable[formalityTimeArriveIdx][formalityTimeLeaveIdx]*8;
 }

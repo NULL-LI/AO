@@ -35,7 +35,7 @@ public:
 };
 
 int formalityTime(shared_ptr<FLIGHT_GATE> flightGateArrive,shared_ptr<FLIGHT_GATE> flightGateLeave);
-int metroTimes(shared_ptr<FLIGHT_GATE> flightGateArrive,shared_ptr<FLIGHT_GATE> flightGateLeave);
+int metroTime(shared_ptr<FLIGHT_GATE> flightGateArrive,shared_ptr<FLIGHT_GATE> flightGateLeave);
 
 typedef std::vector<shared_ptr<FLIGHT_GATE>> FlightGateList;
 

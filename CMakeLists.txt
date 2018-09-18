@@ -1,7 +1,7 @@
 # cmake needs this line
 cmake_minimum_required(VERSION 2.8)
 add_compile_options(-std=c++11)
-set(CMAKE_CXX_FLAGS "-march=native -O0  -pthread")
+set(CMAKE_CXX_FLAGS "-march=native -O3  -pthread")
 # Define project name
 project(airport)
 

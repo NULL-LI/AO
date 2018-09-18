@@ -32,9 +32,9 @@ bool PLAN::getpassengerTotalTension() {
       passengerTotalChangeTime += (double) formalityTime(
               passengerGroupListAll[i]->flight_with_gate_arrive_ptr,
               passengerGroupListAll[i]->flight_with_gate_leave_ptr);
-      passengerTotalChangeTime += (double) metroTimes(
+      passengerTotalChangeTime += (double) metroTime(
               passengerGroupListAll[i]->flight_with_gate_arrive_ptr,
-              passengerGroupListAll[i]->flight_with_gate_leave_ptr);
+              passengerGroupListAll[i]->flight_with_gate_leave_ptr)*8.0;
 
       double flight_connect_time = 0;
       flight_connect_time =
