@@ -1,4 +1,4 @@
 all flights,303,success flights,244,failed flights,59
-wide flights,49,narrow flights,195
+wide flights,49,all wide flights,49,narrow flights,195,all narrow flights,254
 gate used,66,narrow gate,45,wide gate,21,t gate,27,s gate,39
 time duration in t,34090,time duration s,50770

@@ -389,7 +389,16 @@ void Solution1::saveResult(){
 		gate_num++;
 		cout<<endl;
 	}
-    outFile<<"wide flights,"<<wide_flights<<",narrow flights,"<<narrow_flights<<endl;
+    int narrow_flights_all=0;
+    int wide_flights_all=0;
+    for(int i=0;i<mesh->flightListAll.size();i++){
+        if(mesh->flightListAll[i]->plane_size==N){
+            narrow_flights_all ++;
+        }else{
+            wide_flights_all++;
+        }
+    }
+    outFile<<"wide flights,"<<wide_flights<<",all wide flights,"<<wide_flights_all<<",narrow flights,"<<narrow_flights<<",all narrow flights,"<<narrow_flights_all<<endl;
     outFile<<"gate used,"<<gate_num<<",narrow gate,"<<gate_narrow<<",wide gate,"<<gate_wide<<",t gate,"<<t_gate<<",s gate,"<<s_gate<<endl;
     outFile<<"time duration in t,"<<time_duration_t<<",time duration s,"<<time_duration_s<<endl;
 
