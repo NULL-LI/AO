@@ -4,12 +4,13 @@
 #include "solution1.h"
 
 int main() {
+	//initialization
   shared_ptr<Mesh> mesh(new Mesh());
   printf("Start main\n");
   mesh->addFlights("../data/pucks.csv");
   mesh->addGates("../data/gates.csv");
   mesh->addPassengerGroups("../data/tickets.csv");
-
+	//solution1
   shared_ptr<Solution1 > solution1(new Solution1(mesh));
   solution1->solve();
   int flight_num=0;
@@ -21,14 +22,7 @@ int main() {
 	  cout<<"  flight num:"<<flight_num<<endl;
 	  flight_num=0;
   }
-  //cout<<"flight num:"<<flight_num<<endl;
-
-  
-//   GateType m=Narrow_D_D;
-//   for(int i=0;i<14;i++){
-// 	  cout<<mesh->gateInfoAll.gate_group[i]->gate_same_type.size()<<endl;
-//   }
-
+	//print solution result
 	shared_ptr<PLAN> plan;
 	plan=solution1->plan;
 	int gate_num=0;
