@@ -338,12 +338,10 @@ int Solution1::getPathListSize(vector<FlightList> flight_path){
 }
 void Solution1::constructTimeline(){
     for(int i=1;i<flight_group_list.size();i++){
-        cout<<"1"<<endl;
 	  if(flight_group_list[i]->flight_paths.size()>mesh->gateInfoAll.gate_group[(int)(flight_group_list[i]->gate_type)]->gate_same_type.size()){
           cout<<"too many timelines in one gate"<<endl;
           return;
       }
-      cout<<"2"<<endl;
       for(int j=0;j<flight_group_list[i]->flight_paths.size();j++){
         GATE gate=*(mesh->gateInfoAll.gate_group[(int)(flight_group_list[i]->gate_type)]->gate_same_type[j]);
         shared_ptr<TIMELINE_GATE> one_timeline(new  TIMELINE_GATE(flight_group_list[i]->flight_paths[j],gate));
@@ -351,6 +349,60 @@ void Solution1::constructTimeline(){
       }//end for
   }//end for
   plan.reset(new PLAN(timelines,mesh->passengerGroupListAll));
+
+}
+void Solution1::saveResult(){
+    string result1_file_name="../data/result1.csv";
+    ofstream outFile;
+    outFile.open(result1_file_name,ios::out);
+    outFile<<"all flights,"<<mesh->flightListAll.size()<<",";
+    outFile<<"success flights,"<<mesh->flightListAll.size()-flight_group_list[0]->flight_paths[0].size()<<",";
+    outFile<<"failed flights,"<<flight_group_list[0]->flight_paths[0].size()<<endl;
+    int narrow_flights=0;
+    int wide_flights=0;
+    int gate_num=0;
+    int gate_narrow=0;
+    int gate_wide=0;
+    int s_gate=0;
+    int t_gate=0;
+    int time_duration_t=0; 
+    int time_duration_s=0;
+    for(int i=0;i<plan->schedule.size();i++){
+		for(int j=0;j<plan->schedule[i]->FlightsOfLine.size();j++){
+			if(plan->schedule[i]->FlightsOfLine[j]->plane_size==N)
+                narrow_flights++;
+            else
+                wide_flights++;
+            if(plan->schedule[i]->gate.gate_building==T)
+                time_duration_t +=plan->schedule[i]->FlightsOfLine[j]->time_go-plan->schedule[i]->FlightsOfLine[j]->time_arrive;
+            else
+                time_duration_s +=plan->schedule[i]->FlightsOfLine[j]->time_go-plan->schedule[i]->FlightsOfLine[j]->time_arrive;
+		}
+        if(plan->schedule[i]->gate.gate_building==T)
+            t_gate++;
+        else
+            s_gate++;
+        if(plan->schedule[i]->gate.gate_size==N)
+            gate_narrow++;
+        else
+            gate_wide++;
+		gate_num++;
+		cout<<endl;
+	}
+    int narrow_flights_all=0;
+    int wide_flights_all=0;
+    for(int i=0;i<mesh->flightListAll.size();i++){
+        if(mesh->flightListAll[i]->plane_size==N){
+            narrow_flights_all ++;
+        }else{
+            wide_flights_all++;
+        }
+    }
+    outFile<<"wide flights,"<<wide_flights<<",all wide flights,"<<wide_flights_all<<",narrow flights,"<<narrow_flights<<",all narrow flights,"<<narrow_flights_all<<endl;
+    outFile<<"gate used,"<<gate_num<<",narrow gate,"<<gate_narrow<<",wide gate,"<<gate_wide<<",t gate,"<<t_gate<<",s gate,"<<s_gate<<endl;
+    outFile<<"time duration in t,"<<time_duration_t<<",time duration s,"<<time_duration_s<<endl;
+
+    outFile.close();
 
 }
 
