@@ -37,9 +37,9 @@ bool PLAN::getpassengerTotalTension() {
         (double)passengerGroupListAll[i]
             ->flight_with_gate_arrive_ptr->time_arrive;
 
-    passengerTotalTension += passengerTotalChangeTime / flight_connect_time;
-  }
-  return true;
+        passengerTotalTension += (double)passengerGroupListAll[i]->peopleNum * (passengerTotalChangeTime / flight_connect_time);
+    }
+    return true;
 }
 
 bool PLAN::getpassengerTotalNumber() {
