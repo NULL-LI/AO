@@ -53,10 +53,12 @@ bool PLAN::getpassengerTotalTension() {
 
 bool PLAN::getpassengerTotalNumber() {
   passengerInBuildingNumber = 0;
+  passengerTotalNumber = 0;
   for (int iter = 0; iter < passengerGroupListAll.size(); iter++) {
     if (passengerGroupListAll[iter]->inBuilding()) {
       passengerInBuildingNumber += passengerGroupListAll[iter]->peopleNum;
     }
+    passengerTotalNumber += passengerGroupListAll[iter]->peopleNum;
   }
   return true;
 }
@@ -414,6 +416,11 @@ bool PLAN::printAllocation() {
            flight_gate_ptr->gate.gate_building == T ? "T" : "s",
            flight_gate_ptr->gate.gate_num);
   }
+
+  printf("passengerTotalNumber  %d passengerInBuildingNumber %d out of "
+         "building %d",
+         passengerTotalNumber, passengerInBuildingNumber,
+         passengerTotalNumber - passengerInBuildingNumber);
 }
 
 int PLAN::passengerQ2FailNum() {
