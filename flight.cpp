@@ -24,7 +24,7 @@ bool FLIGHT::validFlight(shared_ptr<FLIGHT> laterFlight){
 }
 
 
-int formalityTime(FLIGHT_GATE flightGateArrive,FLIGHT_GATE flightGateLeave){
+int formalityTime(shared_ptr<FLIGHT_GATE> flightGateArrive,shared_ptr<FLIGHT_GATE> flightGateLeave){
     int formalityTimeTable[4][4] = {
             {15,20,35,40},
             {20,15,40,35},
@@ -34,8 +34,8 @@ int formalityTime(FLIGHT_GATE flightGateArrive,FLIGHT_GATE flightGateLeave){
 
 
     int formalityTimeArriveIdx, formalityTimeLeaveIdx;
-    if (flightGateArrive.type_arrive == D) {
-        switch (flightGateArrive.gate.gate_building) {
+    if (flightGateArrive->type_arrive == D) {
+        switch (flightGateArrive->gate.gate_building) {
             case T:
                 formalityTimeArriveIdx = 0;
                 break;
@@ -45,8 +45,8 @@ int formalityTime(FLIGHT_GATE flightGateArrive,FLIGHT_GATE flightGateLeave){
             default:
                 perror("get timeGateIdx error\n");
         }
-    } else if (flightGateArrive.type_arrive == I) {
-        switch (flightGateArrive.gate.gate_building) {
+    } else if (flightGateArrive->type_arrive == I) {
+        switch (flightGateArrive->gate.gate_building) {
             case T:
                 formalityTimeArriveIdx = 2;
                 break;
@@ -57,8 +57,8 @@ int formalityTime(FLIGHT_GATE flightGateArrive,FLIGHT_GATE flightGateLeave){
                 perror("get timeGateIdx error\n");
         }
     }
-    if (flightGateLeave.type_go == D) {
-        switch (flightGateLeave.gate.gate_building) {
+    if (flightGateLeave->type_go == D) {
+        switch (flightGateLeave->gate.gate_building) {
             case T:
                 formalityTimeLeaveIdx = 0;
                 break;
@@ -68,8 +68,8 @@ int formalityTime(FLIGHT_GATE flightGateArrive,FLIGHT_GATE flightGateLeave){
             default:
                 perror("get timeGateIdx error\n");
         }
-    } else if (flightGateLeave.type_go == I) {
-        switch (flightGateLeave.gate.gate_building) {
+    } else if (flightGateLeave->type_go == I) {
+        switch (flightGateLeave->gate.gate_building) {
             case T:
                 formalityTimeLeaveIdx = 2;
                 break;
@@ -84,7 +84,7 @@ int formalityTime(FLIGHT_GATE flightGateArrive,FLIGHT_GATE flightGateLeave){
 }
 
 
-int metroTimes(FLIGHT_GATE flightGateArrive,FLIGHT_GATE flightGateLeave){
+int metroTimes(shared_ptr<FLIGHT_GATE> flightGateArrive,shared_ptr<FLIGHT_GATE> flightGateLeave){
     int formalityTimeTable[4][4] = {
             {0,1,0,1},
             {1,0,1,0},
@@ -94,8 +94,8 @@ int metroTimes(FLIGHT_GATE flightGateArrive,FLIGHT_GATE flightGateLeave){
 
 
     int formalityTimeArriveIdx, formalityTimeLeaveIdx;
-    if (flightGateArrive.type_arrive == D) {
-        switch (flightGateArrive.gate.gate_building) {
+    if (flightGateArrive->type_arrive == D) {
+        switch (flightGateArrive->gate.gate_building) {
             case T:
                 formalityTimeArriveIdx = 0;
                 break;
@@ -105,8 +105,8 @@ int metroTimes(FLIGHT_GATE flightGateArrive,FLIGHT_GATE flightGateLeave){
             default:
                 perror("get timeGateIdx error\n");
         }
-    } else if (flightGateArrive.type_arrive == I) {
-        switch (flightGateArrive.gate.gate_building) {
+    } else if (flightGateArrive->type_arrive == I) {
+        switch (flightGateArrive->gate.gate_building) {
             case T:
                 formalityTimeArriveIdx = 2;
                 break;
@@ -117,8 +117,8 @@ int metroTimes(FLIGHT_GATE flightGateArrive,FLIGHT_GATE flightGateLeave){
                 perror("get timeGateIdx error\n");
         }
     }
-    if (flightGateLeave.type_go == D) {
-        switch (flightGateLeave.gate.gate_building) {
+    if (flightGateLeave->type_go == D) {
+        switch (flightGateLeave->gate.gate_building) {
             case T:
                 formalityTimeLeaveIdx = 0;
                 break;
@@ -128,8 +128,8 @@ int metroTimes(FLIGHT_GATE flightGateArrive,FLIGHT_GATE flightGateLeave){
             default:
                 perror("get timeGateIdx error\n");
         }
-    } else if (flightGateLeave.type_go == I) {
-        switch (flightGateLeave.gate.gate_building) {
+    } else if (flightGateLeave->type_go == I) {
+        switch (flightGateLeave->gate.gate_building) {
             case T:
                 formalityTimeLeaveIdx = 2;
                 break;
