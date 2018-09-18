@@ -2,9 +2,9 @@
 PLAN::PLAN(vector<shared_ptr<TIMELINE_GATE>> timelines, PassengerGroupList pl)
     : schedule(timelines), passengerGroupListAll(pl), passengerTotalTension(0) {
   srand((unsigned)time(0));
-  switchedScheduleIdx1=0;
-  switchedScheduleIdx2=0;
-passengerInBuildingNumber=0;
+  switchedScheduleIdx1 = 0;
+  switchedScheduleIdx2 = 0;
+  passengerInBuildingNumber = 0;
 }
 
 bool PLAN::getpassengerTotalTime() {
@@ -22,31 +22,33 @@ bool PLAN::getpassengerTotalTime() {
 }
 
 bool PLAN::getpassengerTotalTension() {
-  passengerTotalTension=0;
+  passengerTotalTension = 0;
   for (int i = 0; i < passengerGroupListAll.size(); i++) {
     if (passengerGroupListAll[i]->inBuilding()) {
       double passengerTotalChangeTime = 0;
-      passengerTotalChangeTime += (double) gateWalkingTime(
-              passengerGroupListAll[i]->flight_with_gate_arrive_ptr->gate,
-              passengerGroupListAll[i]->flight_with_gate_leave_ptr->gate);
-      passengerTotalChangeTime += (double) formalityTime(
+      passengerTotalChangeTime += (double)gateWalkingTime(
+          passengerGroupListAll[i]->flight_with_gate_arrive_ptr->gate,
+          passengerGroupListAll[i]->flight_with_gate_leave_ptr->gate);
+      passengerTotalChangeTime += (double)formalityTime(
+          passengerGroupListAll[i]->flight_with_gate_arrive_ptr,
+          passengerGroupListAll[i]->flight_with_gate_leave_ptr);
+      passengerTotalChangeTime +=
+          (double)metroTime(
               passengerGroupListAll[i]->flight_with_gate_arrive_ptr,
-              passengerGroupListAll[i]->flight_with_gate_leave_ptr);
-      passengerTotalChangeTime += (double) metroTime(
-              passengerGroupListAll[i]->flight_with_gate_arrive_ptr,
-              passengerGroupListAll[i]->flight_with_gate_leave_ptr)*8.0;
+              passengerGroupListAll[i]->flight_with_gate_leave_ptr) *
+          8.0;
 
       double flight_connect_time = 0;
-      flight_connect_time =
-              (double) passengerGroupListAll[i]->flight_with_gate_leave_ptr->time_go -
-              (double) passengerGroupListAll[i]
-                      ->flight_with_gate_arrive_ptr->time_arrive;
+      flight_connect_time = (double)passengerGroupListAll[i]
+                                ->flight_with_gate_leave_ptr->time_go -
+                            (double)passengerGroupListAll[i]
+                                ->flight_with_gate_arrive_ptr->time_arrive;
 
-      passengerTotalTension +=
-              (double) passengerGroupListAll[i]->peopleNum * (passengerTotalChangeTime / flight_connect_time);
+      passengerTotalTension += (double)passengerGroupListAll[i]->peopleNum *
+                               (passengerTotalChangeTime / flight_connect_time);
     }
   }
-    return true;
+  return true;
 }
 
 bool PLAN::getpassengerTotalNumber() {
@@ -61,7 +63,7 @@ bool PLAN::getpassengerTotalNumber() {
 // bool PLAN::getPassengerGate(PASSENGERGROUP &passengerGroup){
 //
 //}
-bool switchable( TIMELINE_GATE time_gate_1, TIMELINE_GATE time_gate_2) {
+bool switchable(TIMELINE_GATE time_gate_1, TIMELINE_GATE time_gate_2) {
   if (time_gate_1.gate.gate_size != time_gate_2.gate.gate_size) {
     return false;
   }
@@ -107,8 +109,8 @@ bool PLAN::updatePassengerFlightGate() {
       }
     }
 
-//    if (passengerGroupListAll[i]->flight_with_gate_arrive_ptr == NULL)
-//      continue;
+    //    if (passengerGroupListAll[i]->flight_with_gate_arrive_ptr == NULL)
+    //      continue;
 
     for (int j = 0; j < FlightGateListOfPlan.size(); j++) {
       if (FlightGateListOfPlan[j]->flight_leave_number ==
@@ -129,17 +131,17 @@ bool PLAN::updatePassengerFlightGate() {
 
 bool PLAN::switchGatesRandom() {
   int scheduleNum = schedule.size();
-  int switchIdx1 = rand() % (scheduleNum );
-  int switchIdx2 = rand() % (scheduleNum );
+  int switchIdx1 = rand() % (scheduleNum);
+  int switchIdx2 = rand() % (scheduleNum);
   do {
-    switchIdx1 = rand() % (scheduleNum );
-    switchIdx2 = rand() % (scheduleNum );
-  } while (!switchable(*schedule[switchIdx1], *schedule[switchIdx2])||switchIdx1==switchIdx2);
+    switchIdx1 = rand() % (scheduleNum);
+    switchIdx2 = rand() % (scheduleNum);
+  } while (!switchable(*schedule[switchIdx1], *schedule[switchIdx2]) ||
+           switchIdx1 == switchIdx2);
 
   GATE temp_gate = schedule[switchIdx1]->gate;
   schedule[switchIdx1]->gate = schedule[switchIdx2]->gate;
   schedule[switchIdx2]->gate = temp_gate;
-
 
   switchedScheduleIdx1 = switchIdx1;
   switchedScheduleIdx2 = switchIdx2;
@@ -247,36 +249,37 @@ bool PLAN::isValid(GATEINFO gateinfo) {
 bool PLAN::initFlightGate() {
   FlightGateListOfPlan.clear();
   for (int ite_sche = 0; ite_sche < schedule.size(); ite_sche++) {
-    if(schedule[ite_sche]->FlightsOfLine.empty()){
+    if (schedule[ite_sche]->FlightsOfLine.empty()) {
       continue;
-    } else{
-    for (int ite_fli = 0; ite_fli < schedule[ite_sche]->FlightsOfLine.size();
-         ite_fli++) {
-      shared_ptr<FLIGHT_GATE> flight_gate;
-      flight_gate.reset(
-          new FLIGHT_GATE(*schedule[ite_sche]->FlightsOfLine[ite_fli],
-                          schedule[ite_sche]->gate));
-      FlightGateListOfPlan.push_back(flight_gate);
-    }
+    } else {
+      for (int ite_fli = 0; ite_fli < schedule[ite_sche]->FlightsOfLine.size();
+           ite_fli++) {
+        shared_ptr<FLIGHT_GATE> flight_gate;
+        flight_gate.reset(
+            new FLIGHT_GATE(*schedule[ite_sche]->FlightsOfLine[ite_fli],
+                            schedule[ite_sche]->gate));
+        FlightGateListOfPlan.push_back(flight_gate);
+      }
     }
   }
   return true;
 }
 
-bool PLAN::updateFlightGate(){
-//  FlightGateListOfPlan.clear();
+bool PLAN::updateFlightGate() {
+  //  FlightGateListOfPlan.clear();
   for (int ite_sche = 0; ite_sche < schedule.size(); ite_sche++) {
-    if(schedule[ite_sche]->FlightsOfLine.empty()){
+    if (schedule[ite_sche]->FlightsOfLine.empty()) {
       continue;
-    } else{
+    } else {
       for (int ite_fli = 0; ite_fli < schedule[ite_sche]->FlightsOfLine.size();
            ite_fli++) {
-        for(int ite_fli_gate=0;ite_fli_gate<FlightGateListOfPlan.size();ite_fli_gate++){
-          if(schedule[ite_sche]->FlightsOfLine[ite_fli]->id ==FlightGateListOfPlan[ite_fli_gate]->id)
-          {
-            FlightGateListOfPlan[ite_fli_gate]->gate=schedule[ite_sche]->gate;
+        for (int ite_fli_gate = 0; ite_fli_gate < FlightGateListOfPlan.size();
+             ite_fli_gate++) {
+          if (schedule[ite_sche]->FlightsOfLine[ite_fli]->id ==
+              FlightGateListOfPlan[ite_fli_gate]->id) {
+            FlightGateListOfPlan[ite_fli_gate]->gate = schedule[ite_sche]->gate;
             break;
-          } else{
+          } else {
             continue;
           }
         }
@@ -297,16 +300,17 @@ bool PLAN::fillInEmptyTimeline() { // fill the open gates with empty schedule
       }
     }
   }
-  printf("tempGateList.size(): %ld\n",tempGateList.size());
-  printf("schedule.size(): %ld\n",schedule.size());
-  printf("gateListAll.size(): %ld\n",gateListAll.size());
+  printf("tempGateList.size(): %ld\n", tempGateList.size());
+  printf("schedule.size(): %ld\n", schedule.size());
+  printf("gateListAll.size(): %ld\n", gateListAll.size());
 
   for (int ite_gate = 0; ite_gate < tempGateList.size(); ite_gate++) {
 
     FlightList Flights_temp;
     Flights_temp.clear();
     TIMELINE timeline_temp(Flights_temp);
-    shared_ptr<TIMELINE_GATE> timeline_gate_ptr_temp(new TIMELINE_GATE(Flights_temp, *tempGateList[ite_gate]));
+    shared_ptr<TIMELINE_GATE> timeline_gate_ptr_temp(
+        new TIMELINE_GATE(Flights_temp, *tempGateList[ite_gate]));
 
     schedule.push_back(timeline_gate_ptr_temp);
   }
@@ -318,49 +322,54 @@ bool PLAN::fillInEmptyTimeline() { // fill the open gates with empty schedule
 }
 
 bool PLAN::optimizeTotalTime() {
-  int iter_max=20;
-  const double T_k=0.9;
-  const double EPS=1e-2;
-double T_now=100;
-  while (T_now>EPS){
-  for (int i = 0; i < iter_max; i++) {
-//    printf("i %d\n",i);
-    int timeStore = passengerTotalTime;
+  int iter_max = 40;
+  const double T_k = 0.92;
+  const double EPS = 1e-2;
+  double T_now = 500;
+  while (T_now > EPS) {
+    for (int i = 0; i < iter_max; i++) {
+      //    printf("i %d\n",i);
+      int timeStore = passengerTotalTime;
 
-//    printf("size: %ld %ld %ld %ld ",schedule.size(),gateListAll.size(),FlightGateListOfPlan.size(),passengerGroupListAll.size());
+      //    printf("size: %ld %ld %ld %ld
+      //    ",schedule.size(),gateListAll.size(),FlightGateListOfPlan.size(),passengerGroupListAll.size());
 
-    switchGatesRandom();
-    updateFlightGate();
-    updatePassengerFlightGate();
-    getpassengerTotalTime();
+      switchGatesRandom();
+      updateFlightGate();
+      updatePassengerFlightGate();
+      getpassengerTotalTime();
 
-    double dE=passengerTotalTime-timeStore;
+      double dE = passengerTotalTime - timeStore;
 
-    if (dE < 0) {//success accept
-      continue;
-    } else {
-      double probabilityAccept = exp((-dE)/T_now);
-      if (rand() / double(RAND_MAX) < probabilityAccept) {
+      if (dE < 0) { // success accept
         continue;
       } else {
-        switchGatesBack();
-        updateFlightGate();
-        updatePassengerFlightGate();
-        getpassengerTotalTime();
+        double probabilityAccept = exp((-dE) / T_now);
+        if (rand() / double(RAND_MAX) < probabilityAccept) {
+          continue;
+        } else {
+          switchGatesBack();
+          updateFlightGate();
+          updatePassengerFlightGate();
+          getpassengerTotalTime();
+        }
       }
+
+      printf("passengerTotalTime average %f T_now %f FailNum %d FailRate %f \n",
+             passengerTotalTime / (double)passengerInBuildingNumber, T_now,
+             passengerQ2FailNum(),
+             passengerQ2FailNum() / (double)passengerInBuildingNumber);
     }
-    printf("passengerTotalTime average %f T_now %f\n", passengerTotalTime/(double)passengerInBuildingNumber,T_now);
-  }
-    T_now*=T_k;
+    T_now *= T_k;
   }
   return true;
 }
 bool PLAN::optimizeTotalTension() {
-  int iter_max=20;
-  const double T_k=0.95;
-  const double EPS=1e-5;
-  double T_now=1;
-  while (T_now>EPS){
+  int iter_max = 20;
+  const double T_k = 0.9;
+  const double EPS = 1e-5;
+  double T_now = 10;
+  while (T_now > EPS) {
     for (int i = 0; i < iter_max; i++) {
       double tensionStore = passengerTotalTension;
       switchGatesRandom();
@@ -368,34 +377,59 @@ bool PLAN::optimizeTotalTension() {
       updatePassengerFlightGate();
       getpassengerTotalTension();
 
-        double dE = passengerTotalTension - tensionStore;
+      double dE = passengerTotalTension - tensionStore;
 
-        if (dE < 0) {//success accept
+      if (dE < 0) { // success accept
+        continue;
+      } else {
+        double probabilityAccept = exp((-dE) / T_now);
+        if (rand() / double(RAND_MAX) < probabilityAccept) {
           continue;
         } else {
-          double probabilityAccept = exp((-dE) / T_now);
-          if (rand() / double(RAND_MAX) < probabilityAccept) {
-            continue;
-          } else {
-            switchGatesBack();
-            updateFlightGate();
-            updatePassengerFlightGate();
-            getpassengerTotalTension();
-          }
+          switchGatesBack();
+          updateFlightGate();
+          updatePassengerFlightGate();
+          getpassengerTotalTension();
         }
-      printf("passengerTotalTension average %f T_now %f\n", passengerTotalTension/(double)passengerInBuildingNumber,T_now);
-
       }
-      T_now*=T_k;
+
+      printf("passengerTotalTension average %f T_now %f FailNum %d FailRate %f \n",
+             passengerTotalTension / (double)passengerInBuildingNumber, T_now,
+             passengerQ3FailNum(),
+             passengerQ3FailNum() / (double)passengerInBuildingNumber);
     }
+    T_now *= T_k;
+  }
   return true;
 }
 
-
-bool PLAN::printAllocation(){
+bool PLAN::printAllocation() {
   printf("Plan statistics :\n");
-  for(auto flight_gate_ptr : FlightGateListOfPlan){
-    printf("flight_id %d gate_building %s gate_num %d\n",flight_gate_ptr->id,flight_gate_ptr->gate.gate_building==T?"T":"s",flight_gate_ptr->gate.gate_num);
+  for (auto flight_gate_ptr : FlightGateListOfPlan) {
+    printf("flight_id %d gate_building %s gate_num %d\n", flight_gate_ptr->id,
+           flight_gate_ptr->gate.gate_building == T ? "T" : "s",
+           flight_gate_ptr->gate.gate_num);
   }
+}
 
+int PLAN::passengerQ2FailNum() {
+  int FailNum = 0;
+  for (int iter = 0; iter < passengerGroupListAll.size(); iter++) {
+    if (passengerGroupListAll[iter]->inBuilding()) {
+      if (!passengerGroupListAll[iter]->ifSuccessQ2())
+        FailNum += passengerGroupListAll[iter]->peopleNum;
+    }
+  }
+  return FailNum;
+}
+
+int PLAN::passengerQ3FailNum() {
+  int FailNum = 0;
+  for (int iter = 0; iter < passengerGroupListAll.size(); iter++) {
+    if (passengerGroupListAll[iter]->inBuilding()) {
+      if (!passengerGroupListAll[iter]->ifSuccessQ3())
+        FailNum += passengerGroupListAll[iter]->peopleNum;
+    }
+  }
+  return FailNum;
 }

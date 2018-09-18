@@ -49,8 +49,8 @@ int main() {
 	plan->getpassengerTotalTension();
 
 
-//	plan->optimizeTotalTension();
-	plan->optimizeTotalTime();
+	plan->optimizeTotalTension();
+//	plan->optimizeTotalTime();
 
 	plan->printAllocation();
 
