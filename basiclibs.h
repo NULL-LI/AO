@@ -40,6 +40,4 @@ enum GateType{
 #define random(x)(rand()%x)
 
 
-
-
 #endif

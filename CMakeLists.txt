@@ -8,6 +8,10 @@ project(airport)
 add_library(3rd_libs SHARED Mesh.cpp gate.cpp timeline.cpp Graph.cpp plan.cpp passenger.cpp flight.cpp solution1.cpp)
 # Declare the executable target built from your sources
 add_executable(airport main.cpp)
-target_link_libraries( airport
+add_executable(output output.cpp)
+target_link_libraries( airport 
+        3rd_libs
+        )
+target_link_libraries( output 
         3rd_libs
         )
