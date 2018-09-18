@@ -14,14 +14,35 @@ int main() {
   solution1->solve();
   int flight_num=0;
   for(int i=0;i<solution1->flight_group_list.size();i++){
-	  cout<<"size:"<<solution1->flight_group_list[i]->flight_paths.size()<<" type:"<<solution1->flight_group_list[i]->gate_type<<endl;
+	  cout<<"size:"<<solution1->flight_group_list[i]->flight_paths.size()<<" type:"<<solution1->flight_group_list[i]->gate_type;
 	  for(int j=0;j<solution1->flight_group_list[i]->flight_paths.size();j++){
 		  flight_num +=solution1->flight_group_list[i]->flight_paths[j].size();
 	  }
-	  //cout<<"flight num:"<<flight_num<<endl;
-	  //flight_num=0;
+	  cout<<"  flight num:"<<flight_num<<endl;
+	  flight_num=0;
   }
-  cout<<"flight num:"<<flight_num<<endl;
+  //cout<<"flight num:"<<flight_num<<endl;
+
+  
+//   GateType m=Narrow_D_D;
+//   for(int i=0;i<14;i++){
+// 	  cout<<mesh->gateInfoAll.gate_group[i]->gate_same_type.size()<<endl;
+//   }
+
+	shared_ptr<PLAN> plan;
+	plan=solution1->plan;
+	int gate_num=0;
+	for(int i=0;i<plan->schedule.size();i++){
+		cout<<"Gate id:"<<plan->schedule[i]->gate.id<<" ";
+		for(int j=0;j<plan->schedule[i]->FlightsOfLine.size();j++){
+			
+			printf("%4d",plan->schedule[i]->FlightsOfLine[j]->id);
+		}
+		gate_num++;
+		cout<<endl;
+
+	}
+	cout<<"gate used num:"<<gate_num<<endl;
 
 
   

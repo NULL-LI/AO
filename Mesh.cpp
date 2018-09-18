@@ -112,6 +112,7 @@ bool Mesh::addGates(string gates_src_name) {
   } else {
     printf("Read %ld gates\n", gateListAll.size());
     getGateInfo();
+    constructGateInfo();
     return true;
   }
 }
@@ -177,17 +178,78 @@ string Mesh::Trim(string &str) {
 }
 
 
+void Mesh::constructGateInfo(){
+   for(int i=0;i<14;i++){
+    shared_ptr<struct GateTypeStruct > gate_type_struct(new struct GateTypeStruct());
+    gate_type_struct->gate_type=(enum GateType)i;
+    gateInfoAll.gate_group.push_back(gate_type_struct);
+  }
+    set<FlyType> FlyType_DI = {D, I};
+    set<FlyType> FlyType_I = {I};
+    set<FlyType> FlyType_D = {D};
 
+  for (int i = 0; i < gateListAll.size(); i++) {
+
+    if (gateListAll[i]->gate_size == N) {
+      if (gateListAll[i]->gate_arrive_type == FlyType_I &&
+          gateListAll[i]->gate_leave_type == FlyType_I) {
+        gateInfoAll.gate_group[0]->gate_same_type.push_back(gateListAll[i]);
+      } else if (gateListAll[i]->gate_arrive_type == FlyType_D &&
+                 gateListAll[i]->gate_leave_type == FlyType_D) {
+        gateInfoAll.gate_group[1]->gate_same_type.push_back(gateListAll[i]);
+      } else if (gateListAll[i]->gate_arrive_type == FlyType_I &&
+                 gateListAll[i]->gate_leave_type == FlyType_DI) {
+        gateInfoAll.gate_group[2]->gate_same_type.push_back(gateListAll[i]);
+      } else if (gateListAll[i]->gate_arrive_type == FlyType_DI &&
+                 gateListAll[i]->gate_leave_type == FlyType_I) {
+        gateInfoAll.gate_group[3]->gate_same_type.push_back(gateListAll[i]);
+      } else if (gateListAll[i]->gate_arrive_type == FlyType_D &&
+                 gateListAll[i]->gate_leave_type == FlyType_DI) {
+        gateInfoAll.gate_group[4]->gate_same_type.push_back(gateListAll[i]);
+      } else if (gateListAll[i]->gate_arrive_type == FlyType_DI &&
+                 gateListAll[i]->gate_leave_type == FlyType_D) {
+        gateInfoAll.gate_group[5]->gate_same_type.push_back(gateListAll[i]);
+      } else if (gateListAll[i]->gate_arrive_type == FlyType_DI &&
+                 gateListAll[i]->gate_leave_type == FlyType_DI) {
+        gateInfoAll.gate_group[6]->gate_same_type.push_back(gateListAll[i]);
+      } else {
+        perror("gate DI type error\n");
+      }
+    } else if (gateListAll[i]->gate_size == W) {
+      if (gateListAll[i]->gate_arrive_type == FlyType_I &&
+          gateListAll[i]->gate_leave_type == FlyType_I) {
+        gateInfoAll.gate_group[7]->gate_same_type.push_back(gateListAll[i]);
+      } else if (gateListAll[i]->gate_arrive_type == FlyType_D &&
+                 gateListAll[i]->gate_leave_type == FlyType_D) {
+        gateInfoAll.gate_group[8]->gate_same_type.push_back(gateListAll[i]);
+      } else if (gateListAll[i]->gate_arrive_type == FlyType_I &&
+                 gateListAll[i]->gate_leave_type == FlyType_DI) {
+        gateInfoAll.gate_group[9]->gate_same_type.push_back(gateListAll[i]);
+      } else if (gateListAll[i]->gate_arrive_type == FlyType_DI &&
+                 gateListAll[i]->gate_leave_type == FlyType_I) {
+        gateInfoAll.gate_group[10]->gate_same_type.push_back(gateListAll[i]);
+      } else if (gateListAll[i]->gate_arrive_type == FlyType_D &&
+                 gateListAll[i]->gate_leave_type == FlyType_DI) {
+        gateInfoAll.gate_group[11]->gate_same_type.push_back(gateListAll[i]);
+      } else if (gateListAll[i]->gate_arrive_type == FlyType_DI &&
+                 gateListAll[i]->gate_leave_type == FlyType_D) {
+        gateInfoAll.gate_group[12]->gate_same_type.push_back(gateListAll[i]);
+      } else if (gateListAll[i]->gate_arrive_type == FlyType_DI &&
+                 gateListAll[i]->gate_leave_type == FlyType_DI) {
+        gateInfoAll.gate_group[13]->gate_same_type.push_back(gateListAll[i]);
+      } else {
+        perror("gate DI type error\n");
+      }
+    } else {
+      perror("gate WN type error\n");
+    }
+  }
+}
 
 bool Mesh::getGateInfo() {
   if (gateListAll.empty() == true) {
     cout << "Gate list empty, no gate info!" << endl;
     return false;
-  }
-  for(int i=0;i<14;i++){
-    shared_ptr<struct GateTypeStruct > gate_type_struct(new struct GateTypeStruct());
-    gate_type_struct->gate_type=(enum GateType)i;
-    gateInfoAll.gate_group.push_back(gate_type_struct);
   }
 
   gateInfoAll.gateNum_Narrow_I_I = 0;
@@ -218,31 +280,30 @@ bool Mesh::getGateInfo() {
       if (gateListAll[i]->gate_arrive_type == FlyType_I &&
           gateListAll[i]->gate_leave_type == FlyType_I) {
         gateInfoAll.gateNum_Narrow_I_I += 1;
-        gateInfoAll.gate_group[0]->gate_same_type.push_back(gateListAll[i]);
       } else if (gateListAll[i]->gate_arrive_type == FlyType_D &&
                  gateListAll[i]->gate_leave_type == FlyType_D) {
         gateInfoAll.gateNum_Narrow_D_D += 1;
-        gateInfoAll.gate_group[1]->gate_same_type.push_back(gateListAll[i]);
+        
       } else if (gateListAll[i]->gate_arrive_type == FlyType_I &&
                  gateListAll[i]->gate_leave_type == FlyType_DI) {
         gateInfoAll.gateNum_Narrow_I_DI += 1;
-        gateInfoAll.gate_group[2]->gate_same_type.push_back(gateListAll[i]);
+        
       } else if (gateListAll[i]->gate_arrive_type == FlyType_DI &&
                  gateListAll[i]->gate_leave_type == FlyType_I) {
         gateInfoAll.gateNum_Narrow_DI_I += 1;
-        gateInfoAll.gate_group[3]->gate_same_type.push_back(gateListAll[i]);
+        
       } else if (gateListAll[i]->gate_arrive_type == FlyType_D &&
                  gateListAll[i]->gate_leave_type == FlyType_DI) {
         gateInfoAll.gateNum_Narrow_D_DI += 1;
-        gateInfoAll.gate_group[4]->gate_same_type.push_back(gateListAll[i]);
+        
       } else if (gateListAll[i]->gate_arrive_type == FlyType_DI &&
                  gateListAll[i]->gate_leave_type == FlyType_D) {
         gateInfoAll.gateNum_Narrow_DI_D += 1;
-        gateInfoAll.gate_group[5]->gate_same_type.push_back(gateListAll[i]);
+       
       } else if (gateListAll[i]->gate_arrive_type == FlyType_DI &&
                  gateListAll[i]->gate_leave_type == FlyType_DI) {
         gateInfoAll.gateNum_Narrow_DI_DI += 1;
-        gateInfoAll.gate_group[6]->gate_same_type.push_back(gateListAll[i]);
+        
       } else {
         perror("gate DI type error\n");
       }
@@ -250,31 +311,31 @@ bool Mesh::getGateInfo() {
       if (gateListAll[i]->gate_arrive_type == FlyType_I &&
           gateListAll[i]->gate_leave_type == FlyType_I) {
         gateInfoAll.gateNum_Wide_I_I += 1;
-        gateInfoAll.gate_group[7]->gate_same_type.push_back(gateListAll[i]);
+        
       } else if (gateListAll[i]->gate_arrive_type == FlyType_D &&
                  gateListAll[i]->gate_leave_type == FlyType_D) {
         gateInfoAll.gateNum_Wide_D_D += 1;
-        gateInfoAll.gate_group[8]->gate_same_type.push_back(gateListAll[i]);
+        
       } else if (gateListAll[i]->gate_arrive_type == FlyType_I &&
                  gateListAll[i]->gate_leave_type == FlyType_DI) {
         gateInfoAll.gateNum_Wide_I_DI += 1;
-        gateInfoAll.gate_group[9]->gate_same_type.push_back(gateListAll[i]);
+       
       } else if (gateListAll[i]->gate_arrive_type == FlyType_DI &&
                  gateListAll[i]->gate_leave_type == FlyType_I) {
         gateInfoAll.gateNum_Wide_DI_I += 1;
-        gateInfoAll.gate_group[10]->gate_same_type.push_back(gateListAll[i]);
+        
       } else if (gateListAll[i]->gate_arrive_type == FlyType_D &&
                  gateListAll[i]->gate_leave_type == FlyType_DI) {
         gateInfoAll.gateNum_Wide_D_DI += 1;
-        gateInfoAll.gate_group[11]->gate_same_type.push_back(gateListAll[i]);
+        
       } else if (gateListAll[i]->gate_arrive_type == FlyType_DI &&
                  gateListAll[i]->gate_leave_type == FlyType_D) {
         gateInfoAll.gateNum_Wide_DI_D += 1;
-        gateInfoAll.gate_group[12]->gate_same_type.push_back(gateListAll[i]);
+        
       } else if (gateListAll[i]->gate_arrive_type == FlyType_DI &&
                  gateListAll[i]->gate_leave_type == FlyType_DI) {
         gateInfoAll.gateNum_Wide_DI_DI += 1;
-        gateInfoAll.gate_group[13]->gate_same_type.push_back(gateListAll[i]);
+      
       } else {
         perror("gate DI type error\n");
       }

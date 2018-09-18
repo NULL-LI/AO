@@ -51,7 +51,7 @@ void Graph::constructBinaryGraph(){
         //update map
         for(int j=0;j<map[i].size();j++){
             map[i][j]+=initial_size;
-            map[map[i][j]].push_back(i);
+           map[map[i][j]].push_back(i);
         }
 
     }
@@ -72,22 +72,36 @@ bool Graph::dfs(int index){
             if(link[index_child]<0 || dfs(link[index_child])){
                 link[index_child]=index;
                 link[index]=index_child;
+
                 return true;
             }
         }
     }
     return false;
+
 }
-//
+////////////
 void Graph::findPair(){
     //update link
-    for(int i=0;i<nodeList.size();i++){
+    int half_size=nodeList.size()/2;
+    for(int i=0;i<half_size;i++){
+        for(int i=0;i<nodeList.size();i++){
+            nodeList[i]->vis=false;
+        }
+        // if(link[nodeList.size()-1-i] <0 && dfs(i))//self is not in the pair
+        //     path_num++;
         
-        if(link[nodeList.size()-1-i] <0 && dfs(i))//self is not in the pair
-            path_num++;
+        // for(int i=0;i<nodeList.size();i++){
+        //     nodeList[i]->vis=false;
+        // }
         if(link[i] <0 && dfs(i))//self is not in the pair
             path_num++;
     }
+    // for(int i=0;i<nodeList.size();i++){
+    //     if(link[link[i]]!=i){
+    //         cout<<
+    //     }
+    // }
 }
 
 //according to the pairs store in links
@@ -104,10 +118,17 @@ void Graph::findPath(){
         nodeList[i]->vis=false;
         vector<int> adjacent;
         //connect the binary node
-        adjacent.push_back((i<initial_node_size)?(initial_node_size+i):(i-initial_node_size));
+        if(i<initial_node_size){
+            adjacent.push_back(initial_node_size+i);
+        }
+        else{
+            adjacent.push_back(i-initial_node_size);
+        }
+      //adjacent.push_back((i<initial_node_size)?(initial_node_size+i):(i-initial_node_size));
         //connect the pair node
         if(link[i]>=0){
             adjacent.push_back(link[i]);
+            //cout<<"i:"<<i<<"link[link[i]]"<<link[link[i]]<<endl;
         }
         //cout<<adjacent[0]<<endl;
         map2.push_back(adjacent);
@@ -119,6 +140,7 @@ void Graph::findPath(){
         //and flight is not NULL
         //then this is a start node
         if(!(nodeList[i]->vis)&& nodeList[i]->flight && map2[i].size()==1){
+            //<<" "<<map[i][0]<<endl;
             path_found++;
             nodeList[i]->vis=true;
             FlightList one_path;
@@ -128,12 +150,18 @@ void Graph::findPath(){
             while(map2[map2[sig][0]].size()==2){
                 //cout<<"2"<<endl;
                 sig=map2[map2[sig][0]][1];
-                nodeList[sig]->vis=false;
+                nodeList[sig]->vis=true;
                 one_path.insert(one_path.begin(),nodeList[sig]->flight);
             }
             path_list.push_back(one_path);   
         }//end if
     }//end for
+    for(int i=0;i<initial_node_size;i++){
+        if(!nodeList[i]->vis){
+             //cout<<i<<" "<<map2[i].size()<<" "<<map2[i][1]<<"  "<<map2[map2[i][1]][1]<<" "<<link[i]<<" "<<link[link[i]]<<endl;
+              int sig=i;
+         }
+     }
    // cout<<"path num:"<<path_num<<endl;
    // cout<<"path found:"<<path_found<<endl;
 }

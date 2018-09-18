@@ -22,6 +22,7 @@ public:
   bool addPassengerGroups(string ticket_src_name) ;
   bool getGateInfo();
   void clear();
+  void constructGateInfo();//yee
   string Trim(string &str);
 };
 
