@@ -390,3 +390,12 @@ bool PLAN::optimizeTotalTension() {
     }
   return true;
 }
+
+
+bool PLAN::printAllocation(){
+  printf("Plan statistics :\n");
+  for(auto flight_gate_ptr : FlightGateListOfPlan){
+    printf("flight_id %d gate_building %s gate_num %d\n",flight_gate_ptr->id,flight_gate_ptr->gate.gate_building==T?"T":"s",flight_gate_ptr->gate.gate_num);
+  }
+
+}

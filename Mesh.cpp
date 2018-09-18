@@ -85,7 +85,7 @@ bool Mesh::addGates(string gates_src_name) {
     Building gate_building = (fields[1] == "T" ? T : S);
     int gate_num;
     char tmp[2];
-    sscanf(fields[0].data(), "%s%d", tmp, &gate_num);
+    sscanf(fields[0].data(), "%c%d", tmp, &gate_num);
     Direction gate_direction;
     //      string direction;
     if (strcmp(fields[2].data(), "North") == 0) {

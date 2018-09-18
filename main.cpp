@@ -37,6 +37,8 @@ int main() {
 
 	}
 	cout<<"gate used num:"<<gate_num<<endl;
+
+
 	plan->gateListAll=mesh->gateListAll;
 	plan->initFlightGate();
 	plan->updateFlightGate();
@@ -49,6 +51,8 @@ int main() {
 
 //	plan->optimizeTotalTension();
 	plan->optimizeTotalTime();
+
+	plan->printAllocation();
 
   
 

@@ -38,6 +38,8 @@ int passengerInBuildingNumber;
 
   bool optimizeTotalTime();
   bool optimizeTotalTension();
+
+    bool printAllocation();
 };
 bool switchable(const TIMELINE_GATE time_gate_1,const TIMELINE_GATE time_gate_2);
 #endif

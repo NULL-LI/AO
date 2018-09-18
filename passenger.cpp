@@ -8,3 +8,12 @@ bool PASSENGERGROUP::inBuilding(){
         return false;
     }
 }
+
+
+bool PASSENGERGROUP::ifFailQ2(){
+//if()
+}
+
+bool PASSENGERGROUP::ifFailQ3(){
+
+}
