@@ -22,6 +22,7 @@ bool PLAN::getpassengerTotalTime() {
 }
 
 bool PLAN::getpassengerTotalTension() {
+  passengerTotalTension=0;
   for (int i = 0; i < passengerGroupListAll.size(); i++) {
     if (passengerGroupListAll[i]->inBuilding()) {
       double passengerTotalChangeTime = 0;
@@ -106,8 +107,8 @@ bool PLAN::updatePassengerFlightGate() {
       }
     }
 
-    if (passengerGroupListAll[i]->flight_with_gate_arrive_ptr == NULL)
-      continue;
+//    if (passengerGroupListAll[i]->flight_with_gate_arrive_ptr == NULL)
+//      continue;
 
     for (int j = 0; j < FlightGateListOfPlan.size(); j++) {
       if (FlightGateListOfPlan[j]->flight_leave_number ==
@@ -128,11 +129,11 @@ bool PLAN::updatePassengerFlightGate() {
 
 bool PLAN::switchGatesRandom() {
   int scheduleNum = schedule.size();
-  int switchIdx1 = rand() % (scheduleNum + 1);
-  int switchIdx2 = rand() % (scheduleNum + 1);
+  int switchIdx1 = rand() % (scheduleNum );
+  int switchIdx2 = rand() % (scheduleNum );
   do {
-    switchIdx1 = rand() % (scheduleNum + 1);
-    switchIdx2 = rand() % (scheduleNum + 1);
+    switchIdx1 = rand() % (scheduleNum );
+    switchIdx2 = rand() % (scheduleNum );
   } while (!switchable(*schedule[switchIdx1], *schedule[switchIdx2])||switchIdx1==switchIdx2);
 
   GATE temp_gate = schedule[switchIdx1]->gate;
@@ -316,14 +317,14 @@ bool PLAN::fillInEmptyTimeline() { // fill the open gates with empty schedule
   return true;
 }
 
-bool PLAN::optimizeTotalTime(int iter) {
+bool PLAN::optimizeTotalTime() {
+  int iter_max=20;
   const double T_k=0.9;
-  const double EPS=1e-6;
-double T_now=10;
-  printf("iter %d\n",iter);
+  const double EPS=1e-2;
+double T_now=100;
   while (T_now>EPS){
-  for (int i = 0; i < iter; i++) {
-    printf("i %d\n",i);
+  for (int i = 0; i < iter_max; i++) {
+//    printf("i %d\n",i);
     int timeStore = passengerTotalTime;
 
 //    printf("size: %ld %ld %ld %ld ",schedule.size(),gateListAll.size(),FlightGateListOfPlan.size(),passengerGroupListAll.size());
@@ -348,33 +349,44 @@ double T_now=10;
         getpassengerTotalTime();
       }
     }
-    printf("passengerTotalTime average %f\n", passengerTotalTime/(double)passengerInBuildingNumber);
+    printf("passengerTotalTime average %f T_now %f\n", passengerTotalTime/(double)passengerInBuildingNumber,T_now);
   }
     T_now*=T_k;
   }
   return true;
 }
-bool PLAN::optimizeTotalTension(int iter) {
-  for (int i = 0; i < iter; i++) {
-    double tensionStore = passengerTotalTension;
-    switchGatesRandom();
-    updateFlightGate();
-    updatePassengerFlightGate();
-    getpassengerTotalTension();
+bool PLAN::optimizeTotalTension() {
+  int iter_max=20;
+  const double T_k=0.9;
+  const double EPS=1e-5;
+  double T_now=1;
+  while (T_now>EPS){
+    for (int i = 0; i < iter_max; i++) {
+      double tensionStore = passengerTotalTension;
+      switchGatesRandom();
+      updateFlightGate();
+      updatePassengerFlightGate();
+      getpassengerTotalTension();
 
-    if (passengerTotalTension < tensionStore) {
-      continue;
-    } else {
-      double probabilityAccept = exp(tensionStore - passengerTotalTension/(double)passengerInBuildingNumber);
-      if (rand() / double(RAND_MAX) < probabilityAccept) {
-        continue;
-      } else {
-        switchGatesBack();
-        updateFlightGate();
-        updatePassengerFlightGate();
+        double dE = passengerTotalTension - tensionStore;
+
+        if (dE < 0) {//success accept
+          continue;
+        } else {
+          double probabilityAccept = exp((-dE) / T_now);
+          if (rand() / double(RAND_MAX) < probabilityAccept) {
+            continue;
+          } else {
+            switchGatesBack();
+            updateFlightGate();
+            updatePassengerFlightGate();
+            getpassengerTotalTension();
+          }
+        }
+      printf("passengerTotalTension average %f T_now %f\n", passengerTotalTension/(double)passengerInBuildingNumber,T_now);
+
       }
+      T_now*=T_k;
     }
-    printf("passengerTotalTension average %f\n", passengerTotalTension);
-  }
   return true;
 }
