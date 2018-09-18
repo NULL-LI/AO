@@ -26,7 +26,7 @@ bool PLAN::getpassengerTotalTension()
         double flight_connect_time = 0;
         flight_connect_time = (double)passengerGroupListAll[i]->flight_with_gate_leave_ptr->time_go - (double)passengerGroupListAll[i]->flight_with_gate_arrive_ptr->time_arrive;
 
-        passengerTotalTension += passengerTotalChangeTime/flight_connect_time;
+        passengerTotalTension += (double)passengerGroupListAll[i]->peopleNum * (passengerTotalChangeTime / flight_connect_time);
     }
     return true;
 }
