@@ -38,6 +38,14 @@ int main() {
 	}
 	cout<<"gate used num:"<<gate_num<<endl;
 
+	plan->updateFlightGate();
+	plan->updatePassengerFlightGate();
+	plan->getpassengerTotalNumber();
+	plan->getpassengerTotalTime();
+	plan->getpassengerTotalTension();
+
+	plan->optimizeTotalTime(100);
+
 
   
 

@@ -2,10 +2,9 @@
 PLAN::PLAN(vector<shared_ptr<TIMELINE_GATE>> timelines, PassengerGroupList pl)
     : schedule(timelines), passengerGroupListAll(pl), passengerTotalTension(0) {
   srand((unsigned)time(0));
-    updateFlightGate();
-    updatePassengerFlightGate();
-    getpassengerTotalTime();
-    getpassengerTotalTension();
+  switchedScheduleIdx1=0;
+  switchedScheduleIdx2=0;
+passengerInBuildingNumber=0;
 }
 
 bool PLAN::getpassengerTotalTime() {
@@ -24,25 +23,28 @@ bool PLAN::getpassengerTotalTime() {
 
 bool PLAN::getpassengerTotalTension() {
   for (int i = 0; i < passengerGroupListAll.size(); i++) {
-    double passengerTotalChangeTime = 0;
-    passengerTotalChangeTime += (double)gateWalkingTime(
-        passengerGroupListAll[i]->flight_with_gate_arrive_ptr->gate,
-        passengerGroupListAll[i]->flight_with_gate_leave_ptr->gate);
-    passengerTotalChangeTime += (double)formalityTime(
-        passengerGroupListAll[i]->flight_with_gate_arrive_ptr,
-        passengerGroupListAll[i]->flight_with_gate_leave_ptr);
-    passengerTotalChangeTime += (double)metroTimes(
-        passengerGroupListAll[i]->flight_with_gate_arrive_ptr,
-        passengerGroupListAll[i]->flight_with_gate_leave_ptr);
+    if (passengerGroupListAll[i]->inBuilding()) {
+      double passengerTotalChangeTime = 0;
+      passengerTotalChangeTime += (double) gateWalkingTime(
+              passengerGroupListAll[i]->flight_with_gate_arrive_ptr->gate,
+              passengerGroupListAll[i]->flight_with_gate_leave_ptr->gate);
+      passengerTotalChangeTime += (double) formalityTime(
+              passengerGroupListAll[i]->flight_with_gate_arrive_ptr,
+              passengerGroupListAll[i]->flight_with_gate_leave_ptr);
+      passengerTotalChangeTime += (double) metroTimes(
+              passengerGroupListAll[i]->flight_with_gate_arrive_ptr,
+              passengerGroupListAll[i]->flight_with_gate_leave_ptr);
 
-    double flight_connect_time = 0;
-    flight_connect_time =
-        (double)passengerGroupListAll[i]->flight_with_gate_leave_ptr->time_go -
-        (double)passengerGroupListAll[i]
-            ->flight_with_gate_arrive_ptr->time_arrive;
+      double flight_connect_time = 0;
+      flight_connect_time =
+              (double) passengerGroupListAll[i]->flight_with_gate_leave_ptr->time_go -
+              (double) passengerGroupListAll[i]
+                      ->flight_with_gate_arrive_ptr->time_arrive;
 
-        passengerTotalTension += (double)passengerGroupListAll[i]->peopleNum * (passengerTotalChangeTime / flight_connect_time);
+      passengerTotalTension +=
+              (double) passengerGroupListAll[i]->peopleNum * (passengerTotalChangeTime / flight_connect_time);
     }
+  }
     return true;
 }
 
@@ -282,13 +284,14 @@ bool PLAN::fillInEmptyTimeline() { // fill the open gates with empty schedule
 
 bool PLAN::optimizeTotalTime(int iter) {
   for (int i = 0; i < iter; i++) {
+    printf("i %d\n",i);
     int timeStore = passengerTotalTime;
     switchGatesRandom();
     updateFlightGate();
     updatePassengerFlightGate();
     getpassengerTotalTime();
 
-    if (passengerTotalTime < timeStore) {
+    if (passengerTotalTime < timeStore) {//success accept
       continue;
     } else {
       double probabilityAccept = exp(timeStore - passengerTotalTime);
