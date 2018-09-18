@@ -36,8 +36,8 @@ int passengerInBuildingNumber;
     bool initFlightGate();
   bool fillInEmptyTimeline();
 
-  bool optimizeTotalTime(int iter);
-  bool optimizeTotalTension(int iter);
+  bool optimizeTotalTime();
+  bool optimizeTotalTension();
 };
 bool switchable(const TIMELINE_GATE time_gate_1,const TIMELINE_GATE time_gate_2);
 #endif

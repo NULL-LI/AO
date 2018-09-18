@@ -46,8 +46,9 @@ int main() {
 	plan->getpassengerTotalTime();
 	plan->getpassengerTotalTension();
 
-	bool bool_opti_time= plan->optimizeTotalTime(100);
-printf("bool_opti_time : %s\n",bool_opti_time ?"true":"false");
+
+	plan->optimizeTotalTension();
+	plan->optimizeTotalTime();
 
   
 
