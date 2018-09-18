@@ -41,6 +41,9 @@ public:
 
   bool printAllocation();
 
+    bool printPassengerTimeInfoQ2();
+    bool printPassengerTimeInfoQ3();
+
   int passengerQ3FailNum();
   int passengerQ2FailNum();
 

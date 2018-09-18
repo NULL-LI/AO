@@ -362,6 +362,7 @@ bool PLAN::optimizeTotalTime() {
     }
     T_now *= T_k;
   }
+  printPassengerTimeInfoQ2();
   return true;
 }
 bool PLAN::optimizeTotalTension() {
@@ -393,13 +394,16 @@ bool PLAN::optimizeTotalTension() {
         }
       }
 
-      printf("passengerTotalTension average %f T_now %f FailNum %d FailRate %f \n",
-             passengerTotalTension / (double)passengerInBuildingNumber, T_now,
-             passengerQ3FailNum(),
-             passengerQ3FailNum() / (double)passengerInBuildingNumber);
+      printf(
+          "passengerTotalTension average %f T_now %f FailNum %d FailRate %f \n",
+          passengerTotalTension / (double)passengerInBuildingNumber, T_now,
+          passengerQ3FailNum(),
+          passengerQ3FailNum() / (double)passengerInBuildingNumber);
     }
     T_now *= T_k;
   }
+
+  printPassengerTimeInfoQ3();
   return true;
 }
 
@@ -432,4 +436,28 @@ int PLAN::passengerQ3FailNum() {
     }
   }
   return FailNum;
+}
+
+bool PLAN::printPassengerTimeInfoQ2() {
+  for (int iter = 0; iter < passengerGroupListAll.size(); iter++) {
+    if (passengerGroupListAll[iter]->inBuilding()) {
+      for (int i = 0; i < passengerGroupListAll[iter]->peopleNum; i++) {
+        printf("PassengerTimeInfoQ2 time %f tension %f\n",
+               passengerGroupListAll[iter]->passengerTimeQ2(),
+               passengerGroupListAll[iter]->passengerTensionQ2());
+      }
+    }
+  }
+}
+
+bool PLAN::printPassengerTimeInfoQ3() {
+  for (int iter = 0; iter < passengerGroupListAll.size(); iter++) {
+    if (passengerGroupListAll[iter]->inBuilding()) {
+      for (int i = 0; i < passengerGroupListAll[iter]->peopleNum; i++) {
+        printf("PassengerTimeInfoQ2 time %f tension %f\n",
+               passengerGroupListAll[iter]->passengerTimeQ3(),
+               passengerGroupListAll[iter]->passengerTensionQ3());
+      }
+    }
+  }
 }
