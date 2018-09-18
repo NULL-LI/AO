@@ -2,6 +2,10 @@
 PLAN::PLAN(vector<shared_ptr<TIMELINE_GATE>> timelines, PassengerGroupList pl)
     : schedule(timelines), passengerGroupListAll(pl), passengerTotalTension(0) {
   srand((unsigned)time(0));
+    updateFlightGate();
+    updatePassengerFlightGate();
+    getpassengerTotalTime();
+    getpassengerTotalTension();
 }
 
 bool PLAN::getpassengerTotalTime() {
@@ -296,7 +300,7 @@ bool PLAN::optimizeTotalTime(int iter) {
         updatePassengerFlightGate();
       }
     }
-    printf("passengerTotalTime %f\n", passengerTotalTime);
+    printf("passengerTotalTime average %f\n", passengerTotalTime/(double)passengerInBuildingNumber);
   }
   return true;
 }
@@ -308,10 +312,10 @@ bool PLAN::optimizeTotalTension(int iter) {
     updatePassengerFlightGate();
     getpassengerTotalTension();
 
-    if (passengerTotalTension > tensionStore) {
+    if (passengerTotalTension < tensionStore) {
       continue;
     } else {
-      double probabilityAccept = exp(-tensionStore + passengerTotalTension);
+      double probabilityAccept = exp(tensionStore - passengerTotalTension/(double)passengerInBuildingNumber);
       if (rand() / double(RAND_MAX) < probabilityAccept) {
         continue;
       } else {
@@ -320,7 +324,7 @@ bool PLAN::optimizeTotalTension(int iter) {
         updatePassengerFlightGate();
       }
     }
-    printf("passengerTotalTension %f\n", passengerTotalTension);
+    printf("passengerTotalTension average %f\n", passengerTotalTension);
   }
   return true;
 }
