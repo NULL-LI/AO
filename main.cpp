@@ -1,3 +1,10 @@
+/*
+ * @Date: 2020-01-09 12:48:10
+ * @LastEditTime : 2020-01-09 12:48:31
+ * @LastEditors  : Li Xiang
+ * @Description: main
+ * @FilePath: /AO/main.cpp
+ */
 
 #include "Graph.h"
 #include "Mesh.h"
@@ -7,9 +14,9 @@ int main() {
 	//initialization
   shared_ptr<Mesh> mesh(new Mesh());
   printf("Start main\n");
-  mesh->addFlights("../data/pucks.csv");
-  mesh->addGates("../data/gates.csv");
-  mesh->addPassengerGroups("../data/tickets.csv");
+  mesh->addFlights("./data/pucks.csv");
+  mesh->addGates("./data/gates.csv");
+  mesh->addPassengerGroups("./data/tickets.csv");
 	//solution1
   shared_ptr<Solution1 > solution1(new Solution1(mesh));
   solution1->solve();
